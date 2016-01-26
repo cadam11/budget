@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Events;
+namespace Budget\Events;
 
 abstract class Event
 {
