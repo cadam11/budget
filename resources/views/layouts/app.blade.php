@@ -12,8 +12,8 @@
     <link href="https://fonts.googleapis.com/css?family=Lato:100,300,400,700" rel='stylesheet' type='text/css'>
 
     <!-- Styles -->
-    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet">
-    {{-- <link href="{{ elixir('css/app.css') }}" rel="stylesheet"> --}}
+    <link rel="stylesheet" href="{{ elixir('css/vendor.css') }}">
+    <link rel="stylesheet" href="{{ elixir('css/app.css') }}">
 
     <style>
         body {
@@ -40,14 +40,17 @@
 
                 <!-- Branding Image -->
                 <a class="navbar-brand" href="{{ url('/') }}">
-                    Laravel
+                    <i class="fa fa-university"></i> Budget
                 </a>
             </div>
 
             <div class="collapse navbar-collapse" id="app-navbar-collapse">
                 <!-- Left Side Of Navbar -->
                 <ul class="nav navbar-nav">
-                    <li><a href="{{ url('/home') }}">Home</a></li>
+                    <li><a href="{{ url('/home') }}"><i class="fa fa-home"></i> Home</a></li>
+                    <li><a href="{{ url('/transactions') }}"><i class="fa fa-shopping-cart"></i> Transactions</a></li>
+                    <li><a href="{{ url('/import') }}"><i class="fa fa-cloud-upload"></i> Import</a></li>
+                    <li><a href="{{ url('/settings') }}"><i class="fa fa-cog"></i> Settings</a></li>
                 </ul>
 
                 <!-- Right Side Of Navbar -->
@@ -74,8 +77,10 @@
     @yield('content')
 
     <!-- JavaScripts -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
-    {{-- <script src="{{ elixir('js/app.js') }}"></script> --}}
+    <script src="{{ elixir('js/vendor.js') }}"></script>
+    <script src="{{ elixir('js/app.js') }}"></script>
+    <script>
+    @yield('script')
+    </script>
 </body>
 </html>
