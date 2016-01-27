@@ -69,4 +69,22 @@ class AuthController extends Controller
             'password' => bcrypt($data['password']),
         ]);
     }
+
+    /**
+     * Disable the build-in registration function
+     * @return [type] [description]
+     */
+    public function getRegister()
+    {
+        return redirect('/');
+    }
+
+    /**
+     * Disable the build-in registration function
+     * @return [type] [description]
+     */
+    public function postRegister()
+    {
+        return redirect('/');
+    }
 }
