@@ -2,6 +2,7 @@
 
 namespace Budget\Http\Controllers;
 
+use Budget\Services\MonthlyService;
 use Budget\Http\Requests;
 use Illuminate\Http\Request;
 
@@ -22,8 +23,24 @@ class HomeController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(MonthlyService $monthly)
     {
-        return view('home');
+        return view('home', [
+            'budgets' => $monthly->getBudgets()
+            ]);
     }
+
+
+    /**
+     * A view to adjust application settings
+     * 
+     * @return \Illuminate\Http\Response
+     */
+    public function settings()
+    {
+        return view('settings');
+    }
+
+
+    
 }
