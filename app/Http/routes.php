@@ -11,9 +11,11 @@
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+// Route::get('/', function () {
+//     Route::auth();
+
+//     Route::get('/', 'HomeController@index');
+// });
 
 /*
 |--------------------------------------------------------------------------
@@ -26,12 +28,19 @@ Route::get('/', function () {
 |
 */
 
-Route::group(['middleware' => ['web']], function () {
-    //
-});
-
 Route::group(['middleware' => 'web'], function () {
     Route::auth();
 
     Route::get('/home', 'HomeController@index');
+    Route::get('/', 'HomeController@index');
+
+    Route::get('/settings', 'HomeController@settings');
+
+    Route::get('/transactions', 'TransactionController@index');
+    Route::get('/transactions/create', 'TransactionController@create');
+
+    Route::post('/transactions', 'TransactionController@store');
+
+
+    Route::get('/categories', 'CategoryController@index');
 });

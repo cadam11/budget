@@ -6,7 +6,11 @@ $vendorDir = dirname(dirname(__FILE__));
 $baseDir = dirname($vendorDir);
 
 return array(
+    'AddCategoriesTable' => $baseDir . '/database/migrations/2016_01_26_201446_add_categories_table.php',
+    'AddTransactionsTable' => $baseDir . '/database/migrations/2016_01_26_202005_add_transactions_table.php',
     'AddUsers' => $baseDir . '/database/migrations/2016_01_26_170628_add_users.php',
+    'Budget\\Category' => $baseDir . '/app/Category.php',
+    'Budget\\Console\\Commands\\GetTransactions' => $baseDir . '/app/Console/Commands/GetTransactions.php',
     'Budget\\Console\\Commands\\Inspire' => $baseDir . '/app/Console/Commands/Inspire.php',
     'Budget\\Console\\Kernel' => $baseDir . '/app/Console/Kernel.php',
     'Budget\\Events\\Event' => $baseDir . '/app/Events/Event.php',
@@ -15,6 +19,7 @@ return array(
     'Budget\\Http\\Controllers\\Auth\\PasswordController' => $baseDir . '/app/Http/Controllers/Auth/PasswordController.php',
     'Budget\\Http\\Controllers\\Controller' => $baseDir . '/app/Http/Controllers/Controller.php',
     'Budget\\Http\\Controllers\\HomeController' => $baseDir . '/app/Http/Controllers/HomeController.php',
+    'Budget\\Http\\Controllers\\TransactionController' => $baseDir . '/app/Http/Controllers/TransactionController.php',
     'Budget\\Http\\Kernel' => $baseDir . '/app/Http/Kernel.php',
     'Budget\\Http\\Middleware\\Authenticate' => $baseDir . '/app/Http/Middleware/Authenticate.php',
     'Budget\\Http\\Middleware\\EncryptCookies' => $baseDir . '/app/Http/Middleware/EncryptCookies.php',
@@ -26,6 +31,7 @@ return array(
     'Budget\\Providers\\AuthServiceProvider' => $baseDir . '/app/Providers/AuthServiceProvider.php',
     'Budget\\Providers\\EventServiceProvider' => $baseDir . '/app/Providers/EventServiceProvider.php',
     'Budget\\Providers\\RouteServiceProvider' => $baseDir . '/app/Providers/RouteServiceProvider.php',
+    'Budget\\Transaction' => $baseDir . '/app/Transaction.php',
     'Budget\\User' => $baseDir . '/app/User.php',
     'Carbon\\Carbon' => $vendorDir . '/nesbot/carbon/src/Carbon/Carbon.php',
     'Carbon\\CarbonInterval' => $vendorDir . '/nesbot/carbon/src/Carbon/CarbonInterval.php',

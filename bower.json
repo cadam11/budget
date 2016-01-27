@@ -1,0 +1,8 @@
+{
+  "name": "budget",
+  "dependencies": {
+    "jquery": "~2.2.0",
+    "bootstrap": "~3.3.6",
+    "typeahead.js-bootstrap3.less": "~0.2.3"
+  }
+}
