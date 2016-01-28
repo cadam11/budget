@@ -9,8 +9,9 @@
 
                 <div class="panel-body">
                     <ul>
-                        <li>Set which accounts are included in import</li>
-                        <li>Manage rules</li>
+                        <li>Set which accounts are included in import (Currently hard-coded to MasterCard and Chequing)</li>
+                        <li>Manage rules for auto-assignment of categories</li>
+                        <li>Manage notifications for approaching/over budget</li>
                     </ul>
 
                 </div>
