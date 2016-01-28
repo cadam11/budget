@@ -3,41 +3,21 @@
 namespace Budget\Http\Controllers;
 
 use Illuminate\Http\Request;
-
-use Carbon\Carbon;
-use Budget\Budget;
+use Budget\Rule;
 use Budget\Http\Requests;
 use Budget\Http\Controllers\Controller;
 
-class BudgetController extends Controller
+class RulesController extends Controller
 {
-    /**
-     * Create a new controller instance.
-     *
-     * @return void
-     */
-    public function __construct()
-    {
-        $this->middleware('auth');
-    }
-
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
-    public function index(Request $request)
+    public function index()
     {
-        $month = (new Carbon($request->get('basedate')))->startOfMonth();
-
-        $budgets = Budget::where('month', $month->toDateTimeString())
-            ->orderBy('variable', 'desc')
-            ->orderBy('category')
-            ->get();
-        
-        return view('budgets.index', [
-            'budgets' => $budgets,
-            'basedate' => $month,
+        return view('rules.index',[
+                'rules'     => Rule::all(),
             ]);
     }
 
@@ -46,35 +26,37 @@ class BudgetController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create(Request $request)
+    public function create()
     {
-        $month = (new Carbon($request->get('basedate')))->startOfMonth();
-        return view('budgets.create', [
-            'basedate' => $month,
-            ]);
+        return view('rules.create');
     }
 
-
     /**
-     * Create a new transcation record
-     * 
+     * Store a newly created resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
     {
         $post = $request->all();
-        $month = (new Carbon($request->get('basedate')))->startOfMonth();
-        $post['month'] = $month->toDateTimeString();
+        $fields = ['amount', 'category', 'pattern'];
+        foreach ($fields as $field){
+            if (isset($post[$field]) && $post[$field] == '')
+                $post[$field] = null;
+        }
 
-        $fields = ['amount', 'category', 'month', 'variable'];
-        $b = Budget::create(array_only($post, $fields));
-        $b->save();
+        try {
+            $r = Rule::create(array_only($post, $fields));
+            $r->save();
 
-        $request->session()->flash('alert-success', "New budget saved for $b->category in ".$month->format('F Y'));
+            $request->session()->flash('alert-success', "New rule saved for $r->category.");
+        } catch (\Exception $e) {
+            $request->session()->flash('alert-danger', "Error: $e->getMessage()");
+        }
 
         return $this->index($request);
     }
-
 
     /**
      * Update the specified resource in storage.
@@ -86,17 +68,18 @@ class BudgetController extends Controller
     public function update(Request $request, $id)
     {
         try {
-            $b = Budget::findOrFail($id);
-            if (!$b->isFillable($request->input('name')))
+            $r = Rule::findOrFail($id);
+            if (!$r->isFillable($request->input('name')))
                 throw new \Exception('Invalid field name');
-            $b->setAttribute($request->input('name'), $request->input('value'));
-            $b->save();
+            $value = $request->input('value');
+            if ($value == '') $value = null;
+            $r->setAttribute($request->input('name'), $value);
+            $r->save();
         } catch (\Exception $e) {
             return $this->handleError($e);
         }
         
     }
-
 
     /**
      * Remove the specified resource from storage.
@@ -107,14 +90,13 @@ class BudgetController extends Controller
     public function destroy($id)
     {
         try {
-            $b = Budget::findOrFail($id);
-            $b->delete();
-            return response()->json(['status'=>'success']);
+            $r = Rule::findOrFail($id);
+            $r->delete();
+            return response()->json(['status'=>'success'], 200);
         } catch (\Exception $e) {
             return $this->handleError($e);
         }
     }
-
 
     /**
      * Creates a JSON response for when exceptions happen
@@ -126,6 +108,6 @@ class BudgetController extends Controller
         return response()->json([
                 'status'=>'error', 
                 'message'=>$e->getMessage()
-            ]);
-    }
+            ], 400);
+    }    
 }
