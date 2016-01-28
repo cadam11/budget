@@ -50,8 +50,8 @@
                 <!-- Left Side Of Navbar -->
                 <ul class="nav navbar-nav">
                     <li><a href="{{ url('/home') }}"><i class="fa fa-home"></i> Home</a></li>
-                    <li><a href="{{ url('/budgets') }}"><i class="fa fa-pie-chart"></i> Budgets</a></li>
                     <li><a href="{{ url('/transactions') }}"><i class="fa fa-shopping-cart"></i> Transactions</a></li>
+                    <li><a href="{{ url('/budgets') }}"><i class="fa fa-pie-chart"></i> Budgets</a></li>
                     <li><a href="{{ url('/import') }}"><i class="fa fa-cloud-upload"></i> Import</a></li>
                     <li><a href="{{ url('/settings') }}"><i class="fa fa-cog"></i> Settings</a></li>
                 </ul>

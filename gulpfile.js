@@ -20,6 +20,7 @@ elixir(function(mix) {
             '../bower/font-awesome/css/font-awesome.min.css',
             '../bower/typeahead.js-bootstrap3.less/typeahead.css',
             '../bower/x-editable/dist/bootstrap3-editable/css/bootstrap-editable.css',
+            '../bower/x-editable/dist/inputs-ext/typeaheadjs/lib/typeahead.js-bootstrap.css',
             '../bower/datatables/media/css/dataTables.bootstrap.min.css'
         	], 'public/css/vendor.css')
 
