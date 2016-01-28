@@ -17,13 +17,13 @@ class MonthlyService {
 	public function getOverview(Carbon $basedate = null) {
 		if ($basedate == null) $basedate = Carbon::now();
 
-		$actuals = Transaction::for($basedate)
+		$actuals = Transaction::month($basedate)
 					->selectRaw('category, sum(amount) as actual')
 					->groupBy('category')
 					->get();
 		
 
-		$budgets = Budget::for($basedate)->get();
+		$budgets = Budget::month($basedate)->get();
 
 
 		$budgets->transform(function($budget, $key) use ($actuals) {
