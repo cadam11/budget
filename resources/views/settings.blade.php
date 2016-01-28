@@ -8,6 +8,8 @@
                 <div class="panel-heading">Settings</div>
 
                 <div class="panel-body">
+
+                    <h3>To do list</h3>
                     <ul>
                         <li>Set which accounts are included in import (Currently hard-coded to MasterCard and Chequing)</li>
                         <li>Manage rules for auto-assignment of categories</li>
