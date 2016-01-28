@@ -1,16 +1,15 @@
 <?php
 
-use Illuminate\Database\Schema\Blueprint;
-use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Seeder;
 
-class AddUsers extends Migration
+class UsersTableSeeder extends Seeder
 {
     /**
-     * Run the migrations.
+     * Run the database seeds.
      *
      * @return void
      */
-    public function up()
+    public function run()
     {
         DB::table('users')->insert([
                 [
@@ -24,15 +23,5 @@ class AddUsers extends Migration
                     'password' => '$2y$10$xlLhBfTO/6w4ypLHfCMR/OoLE7tE05YtSNeaKptH7GVzP.5fdk3LK',
                 ],
             ]);
-    }
-
-    /**
-     * Reverse the migrations.
-     *
-     * @return void
-     */
-    public function down()
-    {
-        DB::table('users')->whereIn('email', ['craig@adam11.ca','karen@adam11.ca'])->delete();
     }
 }
