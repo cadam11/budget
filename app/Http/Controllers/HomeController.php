@@ -32,13 +32,13 @@ class HomeController extends Controller
 
 
     /**
-     * A view to adjust application settings
+     * A view to keep track of work to be done
      * 
      * @return \Illuminate\Http\Response
      */
-    public function settings()
+    public function todo()
     {
-        return view('settings');
+        return view('todo');
     }
 
 
