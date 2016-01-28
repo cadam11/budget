@@ -11,7 +11,9 @@
 
                 <div class="panel-body">
 
-                    <table class="table table-responsive">
+                    <table class="table table-responsive" 
+                        data-paging="false" 
+                        data-order='[[ 1, "asc" ]]' >
                         <thead>
                             <tr>
                                 <th class="col-xs-2 col-sm-2">Account</th>
@@ -113,10 +115,12 @@ $('[data-toggle="confirmation"]').confirmation({
         });
     }
 });
-/*
-$('#delete').click(function(){
 
+$('table').dataTable({
+    columnDefs: [{
+        orderable: false,
+        targets: -1
+    }]
 });
-*/
 
 @endsection
