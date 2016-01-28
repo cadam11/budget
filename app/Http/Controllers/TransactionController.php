@@ -3,7 +3,7 @@
 namespace Budget\Http\Controllers;
 
 use Illuminate\Http\Request;
-
+use DB;
 use Carbon\Carbon;
 use Budget\Transaction;
 use Budget\Http\Requests;
@@ -26,9 +26,13 @@ class TransactionController extends Controller
      * 
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        return view('transactions.index', ['transactions'=>Transaction::all()]);
+        $month = (new Carbon($request->get('basedate')))->startOfMonth();
+
+        return view('transactions.index', [
+                'transactions'=>Transaction::for($month)->get()
+            ]);
     }
 
     /**
@@ -58,6 +62,26 @@ class TransactionController extends Controller
     }
 
 
+
+
+    /**
+     * Remove the specified resource from storage.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function destroy($id)
+    {
+        try {
+            $t = Transaction::findOrFail($id);
+            $t->delete();
+            return response()->json(['status'=>'success'], 200);
+        } catch (\Exception $e) {
+            return $this->handleError($e);
+        }
+    }
+
+
     /**
      * Update the specified resource in storage.
      *
@@ -71,9 +95,10 @@ class TransactionController extends Controller
             $t = Transaction::findOrFail($id);
             if (!$t->isFillable($request->input('name')))
                 throw new \Exception('Invalid field name');
-            if ($request->input('name') == 'category' && $request->input('value') == '')
-                $request->input('value') = null;
-            $t->setAttribute($request->input('name'), $request->input('value'));
+            $value = $request->input('value');
+            if ($request->input('name') == 'category' && $value == '')
+                $value = null;
+            $t->setAttribute($request->input('name'), $value);
             $t->save();
         } catch (\Exception $e) {
             return $this->handleError($e);
@@ -91,6 +116,6 @@ class TransactionController extends Controller
         return response()->json([
                 'status'=>'error', 
                 'message'=>$e->getMessage()
-            ]);
+            ], 400);
     }
 }

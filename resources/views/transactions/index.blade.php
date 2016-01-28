@@ -5,7 +5,7 @@
     <div class="row">
         <div class="col-md-10 col-md-offset-1">
             <div class="panel panel-default">
-                <div class="panel-heading">This Month
+                <div class="panel-heading">@yield('title', 'This Month')
                     <a class="btn btn-xs btn-default pull-right" href="/transactions/create"><i class="fa fa-plus"></i> New Transaction</a>
                 </div>
 
@@ -54,14 +54,15 @@
 @endsection
 @section('script')
 
-
 var categories = new Bloodhound({
-    datumTokenizer: function (data) {
-        return Bloodhound.tokenizers.whitespace(data.category);
-    },
+    datumTokenizer: Bloodhound.tokenizers.whitespace,
     queryTokenizer: Bloodhound.tokenizers.whitespace,
-    prefetch: '{!! url('/categories') !!}'
+    prefetch: {
+        cache: false,
+        url: '{!! url('/categories') !!}'
+    }
 });
+
 
 categories.initialize();
 
@@ -73,10 +74,8 @@ $('.editable-category').editable({
     clear: true,
     typeaheadjs: [
         {
-            highlight: true
-        }, {
+            highlight: true,
             name: 'categories',
-            displayKey: 'category',
             source: categories.ttAdapter()
         }
     ],
