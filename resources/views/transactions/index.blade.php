@@ -87,28 +87,32 @@ categories.initialize();
 $('.editable-category').editable({
     mode: 'inline',
     clear: true,
-    typeaheadjs: [
-        {
-            highlight: true,
-            name: 'categories',
-            source: categories.ttAdapter()
-        }
-    ],
+    typeaheadjs: {
+        highlight: true,
+        name: 'categories',
+        source: categories.ttAdapter()
+    },
     success: function(response, newValue) {
         if(response.status == 'error') return response.message;
     }
 
 });
 
+var table = $('table').DataTable({
+    columnDefs: [{
+        orderable: false,
+        targets: -1
+    }]
+});
 
 $('[data-toggle="confirmation"]').confirmation({
     onConfirm: function() {
-        var row = $(this).parent().parent();
+        var row = $(this).parents('tr');
        $.get('/transactions/' + $(this).data('pk') + '/delete')
         .done(function(response){
             console.log("Row deleted");
             console.log($(row));
-            $(row).remove();
+            table.row(row).remove().draw();
         })
         .fail(function(response){ 
             console.error(response);
@@ -116,11 +120,6 @@ $('[data-toggle="confirmation"]').confirmation({
     }
 });
 
-$('table').dataTable({
-    columnDefs: [{
-        orderable: false,
-        targets: -1
-    }]
-});
+
 
 @endsection
