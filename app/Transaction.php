@@ -14,7 +14,7 @@ class Transaction extends Model
      *
      * @return \Illuminate\Database\Eloquent\Builder
      */
-    public function scopeFor($query, $month)
+    public function scopeMonth($query, $month)
     {
         return $query->whereBetween('date', [
 	        	$month->startOfMonth()->toDateTimeString(),
