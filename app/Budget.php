@@ -15,7 +15,7 @@ class Budget extends Model
      *
      * @return \Illuminate\Database\Eloquent\Builder
      */
-    public function scopeFor($query, $month)
+    public function scopeMonth($query, $month)
     {
         return $query->where('month', $month->startOfMonth()->toDateTimeString())
 			->orderBy('variable', 'desc')
