@@ -11,7 +11,7 @@ use Budget\Http\Controllers\Controller;
 
 class TransactionController extends Controller
 {
-     /**
+    /**
      * Create a new controller instance.
      *
      * @return void
@@ -28,7 +28,7 @@ class TransactionController extends Controller
      */
     public function index()
     {
-        return view('transactions', ['transactions'=>Transaction::all()]);
+        return view('transactions.index', ['transactions'=>Transaction::all()]);
     }
 
     /**
@@ -38,7 +38,7 @@ class TransactionController extends Controller
      */
     public function create()
     {
-    	return view('transactions-new');
+    	return view('transactions.create');
     }
 
     /**
@@ -52,10 +52,45 @@ class TransactionController extends Controller
     	$t = Transaction::create(array_only($request->all(), $fields));
     	$t->save();
 
-    	$request->session()->flash('status', 'Task was successful!');
+    	$request->session()->flash('alert-success', 'New transaction saved.');
 
     	return $this->index();
     }
 
 
+    /**
+     * Update the specified resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function update(Request $request, $id)
+    {
+        try {
+            $t = Transaction::findOrFail($id);
+            if (!$t->isFillable($request->input('name')))
+                throw new \Exception('Invalid field name');
+            if ($request->input('name') == 'category' && $request->input('value') == '')
+                $request->input('value') = null;
+            $t->setAttribute($request->input('name'), $request->input('value'));
+            $t->save();
+        } catch (\Exception $e) {
+            return $this->handleError($e);
+        }
+        
+    }
+
+    /**
+     * Creates a JSON response for when exceptions happen
+     * @param  \Exception $e [description]
+     * @return [type]        [description]
+     */
+    public function handleError(\Exception $e) {
+        // TODO: Make this into a provider
+        return response()->json([
+                'status'=>'error', 
+                'message'=>$e->getMessage()
+            ]);
+    }
 }

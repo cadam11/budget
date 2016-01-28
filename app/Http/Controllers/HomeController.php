@@ -26,7 +26,7 @@ class HomeController extends Controller
     public function index(MonthlyService $monthly)
     {
         return view('home', [
-            'budgets' => $monthly->getBudgets()
+            'budgets' => $monthly->getOverview()
             ]);
     }
 
