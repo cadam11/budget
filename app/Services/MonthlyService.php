@@ -17,11 +17,8 @@ class MonthlyService {
 	public function getOverview(Carbon $basedate = null) {
 		if ($basedate == null) $basedate = Carbon::now();
 
-		$actuals = Transaction::selectRaw('category, sum(amount) as actual')
-					->whereBetween('date', [
-							$basedate->startOfMonth()->toDateTimeString(),
-							$basedate->endOfMonth()->toDateTimeString(),
-						])
+		$actuals = Transaction::for($basedate)
+					->selectRaw('category, sum(amount) as actual')
 					->groupBy('category')
 					->get();
 		
