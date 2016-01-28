@@ -40,6 +40,7 @@ Route::group(['middleware' => 'web'], function () {
     Route::get('/transactions/create', 'TransactionController@create');
     Route::post('/transactions', 'TransactionController@store');
     Route::post('/transactions/{id}', 'TransactionController@update');
+    Route::get('/transactions/{id}/delete', 'TransactionController@destroy');
 
 
     Route::get('/categories', 'CategoryController@index');

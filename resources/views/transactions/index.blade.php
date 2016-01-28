@@ -16,9 +16,10 @@
                             <tr>
                                 <th class="col-xs-2 col-sm-2">Account</th>
                                 <th class="col-xs-1 col-sm-2">Date</th>
-                                <th class="col-xs-6 col-sm-5">Description</th>
+                                <th class="col-xs-6 col-sm-4">Description</th>
                                 <th class="col-xs-2 col-sm-2">Category</th>
                                 <th class="col-xs-1 col-sm-1">Amount</th>
+                                <th class="col-xs-1 col-sm-1"></th>
                             </tr>
                         </thead>
                         <tbody>
@@ -40,6 +41,20 @@
                                     </a>
                                 </td>
                                 <td>{{ money_format("$%n", $t->amount) }}</td>
+                                <td class="text-right">
+                                    <a 
+                                        href="#" 
+                                        id="delete"
+                                        data-toggle="confirmation"
+                                        data-popout="true"
+                                        data-singleton="true"
+                                        data-btn-ok-icon="fa fa-check"
+                                        data-btn-cancel-icon="fa fa-times" 
+                                        data-pk="{{ $t->id }}"
+                                        class="text-muted">
+                                        <i class="fa fa-times"></i>
+                                    </a>
+                                </td>
                             </tr>
                             @endforeach
                         </tbody>
@@ -67,8 +82,6 @@ var categories = new Bloodhound({
 categories.initialize();
 
 
-
-
 $('.editable-category').editable({
     mode: 'inline',
     clear: true,
@@ -84,5 +97,26 @@ $('.editable-category').editable({
     }
 
 });
+
+
+$('[data-toggle="confirmation"]').confirmation({
+    onConfirm: function() {
+        var row = $(this).parent().parent();
+       $.get('/transactions/' + $(this).data('pk') + '/delete')
+        .done(function(response){
+            console.log("Row deleted");
+            console.log($(row));
+            $(row).remove();
+        })
+        .fail(function(response){ 
+            console.error(response);
+        });
+    }
+});
+/*
+$('#delete').click(function(){
+
+});
+*/
 
 @endsection

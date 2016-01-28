@@ -36,7 +36,8 @@ elixir(function(mix) {
         	'../bower/bootstrap/dist/js/bootstrap.min.js',
         	'../bower/typeahead.js/dist/typeahead.bundle.min.js',
             '../bower/x-editable/dist/bootstrap3-editable/js/bootstrap-editable.min.js',
-            '../bower/x-editable/dist/inputs-ext/typeaheadjs/typeaheadjs.js'
+            '../bower/x-editable/dist/inputs-ext/typeaheadjs/typeaheadjs.js',
+            '../bower/bootstrap-confirmation2/bootstrap-confirmation.min.js'
         	], 'public/js/vendor.js')
 
         .scripts([
