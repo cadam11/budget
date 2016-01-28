@@ -6,19 +6,28 @@ use Illuminate\Http\Request;
 use Excel;
 use Carbon\Carbon;
 use Budget\Transaction;
+use Budget\Services\CategoryService;
 use Budget\Http\Requests;
 use Budget\Http\Controllers\Controller;
 
 class ImportController extends Controller
 {
+
+    /**
+     * The CategoryService instance
+     * @var Budget\Services\CategoryService
+     */
+    protected $categories;
+
     /**
      * Create a new controller instance.
      *
      * @return void
      */
-    public function __construct()
+    public function __construct(CategoryService $categories)
     {
         $this->middleware('auth');
+        $this->categories = $categories;
     }
 
 
@@ -78,19 +87,17 @@ class ImportController extends Controller
                 'updated_at'            => Carbon::now(),
             ];
 
-            // TODO: get category smartly
-            
+            $record['category'] = $this->categories->getCategory($record);
             
             return $record;
         });
         
         Transaction::insert($mapped->toArray());
         $import = Transaction::orderby('created_at', 'desc')->limit($mapped->count())->get();
-        dd($import);
 
-    	$grouped = $csv->groupBy('account_type');
-    	dd($grouped);
-
-
+        return view('transactions.index', [
+                'transactions'  => $import,
+                'title'         => 'Imported Transactions',
+            ]);
     }
 }
