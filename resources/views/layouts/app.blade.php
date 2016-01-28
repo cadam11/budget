@@ -13,6 +13,7 @@
 
     <!-- Styles -->
     <link rel="stylesheet" href="{{ elixir('css/vendor.css') }}">
+    @yield('srcstyle')
     <link rel="stylesheet" href="{{ elixir('css/app.css') }}">
 
     <style>
@@ -23,6 +24,7 @@
         .fa-btn {
             margin-right: 6px;
         }
+        @yield('style')
     </style>
 </head>
 <body id="app-layout">
@@ -48,6 +50,7 @@
                 <!-- Left Side Of Navbar -->
                 <ul class="nav navbar-nav">
                     <li><a href="{{ url('/home') }}"><i class="fa fa-home"></i> Home</a></li>
+                    <li><a href="{{ url('/budgets') }}"><i class="fa fa-pie-chart"></i> Budgets</a></li>
                     <li><a href="{{ url('/transactions') }}"><i class="fa fa-shopping-cart"></i> Transactions</a></li>
                     <li><a href="{{ url('/import') }}"><i class="fa fa-cloud-upload"></i> Import</a></li>
                     <li><a href="{{ url('/settings') }}"><i class="fa fa-cog"></i> Settings</a></li>
@@ -71,14 +74,24 @@
                     @endif
                 </ul>
             </div>
-        </div>
+        </div>        
     </nav>
+        <div class="flash-message">
+    @foreach (['danger', 'warning', 'success', 'info'] as $msg)
+      @if(Session::has('alert-' . $msg))
+
+        <p class="alert alert-{{ $msg }} fade in">{{ Session::get('alert-' . $msg) }} <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a></p>
+      @endif
+    @endforeach
+    </div> <!-- end .flash-message -->
+    <div id="_token" class="hidden" data-token="{{ csrf_token() }}"></div>
 
     @yield('content')
 
     <!-- JavaScripts -->
     <script src="{{ elixir('js/vendor.js') }}"></script>
     <script src="{{ elixir('js/app.js') }}"></script>
+    @yield('srcscript')
     <script>
     @yield('script')
     </script>
