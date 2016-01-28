@@ -50,10 +50,18 @@
                 <!-- Left Side Of Navbar -->
                 <ul class="nav navbar-nav">
                     <li><a href="{{ url('/home') }}"><i class="fa fa-home"></i> Home</a></li>
+                    @if (!Auth::guest())
                     <li><a href="{{ url('/transactions') }}"><i class="fa fa-shopping-cart"></i> Transactions</a></li>
                     <li><a href="{{ url('/budgets') }}"><i class="fa fa-pie-chart"></i> Budgets</a></li>
                     <li><a href="{{ url('/import') }}"><i class="fa fa-cloud-upload"></i> Import</a></li>
-                    <li><a href="{{ url('/settings') }}"><i class="fa fa-cog"></i> Settings</a></li>
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i class="fa fa-cog"></i> Settings <i class="fa fa-caret-down"></i></a>
+                        <ul class="dropdown-menu" role="menu">
+                            <li><a href="{{ url('/settings/todo') }}"><i class="fa fa-check-square-o"></i> To Do</a></li>
+                            <li><a href="{{ url('/settings/rules') }}"><i class="fa fa-list"></i> Category Rules</a></li>
+                        </ul>
+                    </li>
+                    @endif
                 </ul>
 
                 <!-- Right Side Of Navbar -->
@@ -64,7 +72,7 @@
                     @else
                         <li class="dropdown">
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
-                                {{ Auth::user()->name }} <span class="caret"></span>
+                                {{ Auth::user()->name }} <i class="fa fa-caret-down"></i>
                             </a>
 
                             <ul class="dropdown-menu" role="menu">
