@@ -38,9 +38,18 @@ Route::group(['middleware' => 'web'], function () {
 
     Route::get('/transactions', 'TransactionController@index');
     Route::get('/transactions/create', 'TransactionController@create');
-
     Route::post('/transactions', 'TransactionController@store');
+    Route::post('/transactions/{id}', 'TransactionController@update');
 
 
     Route::get('/categories', 'CategoryController@index');
+
+    Route::get('/budgets/create', 'BudgetController@create');
+    Route::get('/budgets', 'BudgetController@index');
+    Route::post('/budgets', 'BudgetController@store');
+    Route::post('/budgets/{id}', 'BudgetController@update');
+
+    Route::get('/import', 'ImportController@index');
+    Route::post('/import', 'ImportController@store');
+    Route::get('/import/parse', 'ImportController@parse');
 });

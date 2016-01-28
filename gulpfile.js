@@ -12,29 +12,47 @@ var elixir = require('laravel-elixir');
  */
 
 elixir(function(mix) {
-    mix.sass('app.scss');
+    mix
+        .sass('app.scss')
 
-    mix.styles([
-        '../bower/bootstrap/dist/css/bootstrap.min.css',
-        '../bower/typeahead.js-bootstrap3.less/typeahead.css'
-    	], 'public/css/vendor.css');
+        .styles([
+            '../bower/bootstrap/dist/css/bootstrap.min.css',
+            '../bower/font-awesome/css/font-awesome.min.css',
+            '../bower/typeahead.js-bootstrap3.less/typeahead.css',
+            '../bower/x-editable/dist/bootstrap3-editable/css/bootstrap-editable.css'
+        	], 'public/css/vendor.css')
 
-    mix.copy('resources/assets/bower/bootstrap/dist/css/bootstrap.min.css.map','public/build/css/');
+        .styles([
+            '../bower/dropzone/dist/min/dropzone.min.css'
+            ], 'public/css/dropzone.css')
+
+        .copy('resources/assets/bower/bootstrap/dist/css/bootstrap.min.css.map','public/build/css/')
+        .copy('resources/assets/bower/x-editable/dist/bootstrap3-editable/img','public/build/img/')
+        .copy('resources/assets/bower/font-awesome/fonts', 'public/build/fonts/')
 
 
-    mix.scripts([
-    	'../bower/jquery/dist/jquery.min.js',
-    	'../bower/bootstrap/dist/js/bootstrap.min.js',
-    	'../bower/typeahead.js/dist/typeahead.bundle.min.js'
-    	], 'public/js/vendor.js');
+        .scripts([
+        	'../bower/jquery/dist/jquery.min.js',
+        	'../bower/bootstrap/dist/js/bootstrap.min.js',
+        	'../bower/typeahead.js/dist/typeahead.bundle.min.js',
+            '../bower/x-editable/dist/bootstrap3-editable/js/bootstrap-editable.min.js',
+            '../bower/x-editable/dist/inputs-ext/typeaheadjs/typeaheadjs.js'
+        	], 'public/js/vendor.js')
 
-    mix.scripts('app.js');
+        .scripts([
+            '../bower/dropzone/dist/min/dropzone.min.js'
+            ], 'public/js/dropzone.js')
 
-    mix.version([
-    	'css/app.css',
-    	'css/vendor.css',
-    	'js/vendor.js',
-    	'js/app.js'
-    	]);
+        .scripts('app.js')
+
+        .version([
+        	'css/app.css',
+        	'css/vendor.css',
+            'css/dropzone.css',
+        	'js/vendor.js',
+        	'js/app.js',
+            'js/dropzone.js'
+        	])
+    ;
 
 });
