@@ -34,7 +34,7 @@ Route::group(['middleware' => 'web'], function () {
     Route::get('/home', 'HomeController@index');
     Route::get('/', 'HomeController@index');
 
-    Route::get('/settings', 'HomeController@settings');
+    Route::get('/settings/todo', 'HomeController@todo');
 
     Route::get('/transactions', 'TransactionController@index');
     Route::get('/transactions/create', 'TransactionController@create');
@@ -53,4 +53,10 @@ Route::group(['middleware' => 'web'], function () {
     Route::get('/import', 'ImportController@index');
     Route::post('/import', 'ImportController@store');
     Route::get('/import/parse', 'ImportController@parse');
+
+    Route::get('/settings/rules', 'RulesController@index');
+    Route::get('/settings/rules/create', 'RulesController@create');
+    Route::get('/settings/rules/{id}/delete', 'RulesController@destroy');
+    Route::post('/settings/rules', 'RulesController@store');
+    Route::post('/settings/rules/{id}', 'RulesController@update');
 });

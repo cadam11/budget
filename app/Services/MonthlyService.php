@@ -23,11 +23,7 @@ class MonthlyService {
 					->get();
 		
 
-		$budgets = Budget::where('month', $basedate->startOfMonth()->toDateTimeString())
-			->orderBy('variable')
-			->orderBy('category')
-			->get();
-
+		$budgets = Budget::for($basedate)->get();
 
 
 		$budgets->transform(function($budget, $key) use ($actuals) {
@@ -63,8 +59,10 @@ class MonthlyService {
 		$unbudgeted->status = 'info';
 
 		
+		// TODO: Account for money in categories better
 		foreach ($actuals as $row) {
-			if (!$budgets->contains('category', $row->category)) {
+			if (!$budgets->contains('category', $row->category)
+				&& !in_array($row->category, ["Transfer","Payroll","Government Payment"])) {
 				$unbudgeted->actual += $row->actual;
 			}
 		}
