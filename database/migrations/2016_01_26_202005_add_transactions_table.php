@@ -23,7 +23,6 @@ class AddTransactionsTable extends Migration
             $table->string('imported_description2');
             $table->timestamps();
 
-            $table->foreign('category')->references('category')->on('categories');
         });
     }
 

@@ -1,6 +1,8 @@
 {
-  "css/app.css": "css/app-1d0d44a01f.css",
-  "css/vendor.css": "css/vendor-1492a10404.css",
-  "js/app.js": "js/app-de2c94c67b.js",
-  "js/vendor.js": "js/vendor-0acbcd6ffb.js"
+  "css/app.css": "css/app-c7bff3878f.css",
+  "css/dropzone.css": "css/dropzone-7765fd80bd.css",
+  "css/vendor.css": "css/vendor-f9945c6ddc.css",
+  "js/app.js": "js/app-693a6b30ac.js",
+  "js/dropzone.js": "js/dropzone-787a565d9b.js",
+  "js/vendor.js": "js/vendor-f52288fd86.js"
 }
