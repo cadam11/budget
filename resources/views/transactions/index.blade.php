@@ -11,23 +11,22 @@
 
                 <div class="panel-body">
 
-                    <table class="table table-responsive" 
+                    <table class="table responsive" 
                         data-paging="false" 
                         data-order='[[ 1, "asc" ]]' >
                         <thead>
                             <tr>
-                                <th class="col-xs-2 col-sm-2">Account</th>
-                                <th class="col-xs-1 col-sm-2">Date</th>
+                                <th class="col-xs-1 col-sm-2" data-priority="1">Date</th>
                                 <th class="col-xs-6 col-sm-4">Description</th>
                                 <th class="col-xs-2 col-sm-2">Category</th>
-                                <th class="col-xs-1 col-sm-1">Amount</th>
-                                <th class="col-xs-1 col-sm-1"></th>
+                                <th class="col-xs-2 col-sm-2">Account</th>
+                                <th class="col-xs-1 col-sm-1" data-priority="2">Amount</th>
+                                <th class="col-xs-1 col-sm-1" data-orderable="false"></th>
                             </tr>
                         </thead>
                         <tbody>
                             @foreach ($transactions as $t)
                             <tr>
-                                <td>{{ $t->account }}</td>
                                 <td>{{ $t->date->format('Y-m-d') }}</td>
                                 <td>{{ $t->description }}</td>
                                 <td>
@@ -42,6 +41,7 @@
                                         {{ $t->category or "" }}
                                     </a>
                                 </td>
+                                <td>{{ $t->account }}</td>
                                 <td>{{ money_format("$%n", $t->amount) }}</td>
                                 <td class="text-right">
                                     <a 
@@ -98,13 +98,7 @@ $('.editable-category').editable({
 
 });
 
-var table = $('table').DataTable({
-    columnDefs: [{
-        orderable: false,
-        targets: -1
-    }],
-    responsive: true
-});
+var table = $('table').DataTable();
 
 $('[data-toggle="confirmation"]').confirmation({
     onConfirm: function() {
