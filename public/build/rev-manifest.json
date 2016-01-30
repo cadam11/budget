@@ -1,8 +1,9 @@
 {
   "css/app.css": "css/app-c1ee378b6c.css",
+  "css/datatables-responsive.css": "css/datatables-responsive-0d334a529d.css",
   "css/dropzone.css": "css/dropzone-bca8a5f973.css",
   "css/vendor.css": "css/vendor-3bad3d996f.css",
   "js/app.js": "js/app-973f81fdc5.js",
   "js/dropzone.js": "js/dropzone-5c34f7e396.js",
-  "js/vendor.js": "js/vendor-025a70a41b.js"
+  "js/vendor.js": "js/vendor-947c8cb8af.js"
 }
