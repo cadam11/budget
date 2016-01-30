@@ -102,7 +102,8 @@ var table = $('table').DataTable({
     columnDefs: [{
         orderable: false,
         targets: -1
-    }]
+    }],
+    responsive: true
 });
 
 $('[data-toggle="confirmation"]').confirmation({

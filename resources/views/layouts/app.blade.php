@@ -13,8 +13,9 @@
 
     <!-- Styles -->
     <link rel="stylesheet" href="{{ elixir('css/vendor.css') }}">
-    @yield('srcstyle')
+    <link rel="stylesheet" href="{{ elixir('css/datatables-responsive.css') }}">
     <link rel="stylesheet" href="{{ elixir('css/app.css') }}">
+    @yield('srcstyle')
 
     <style>
         body {
