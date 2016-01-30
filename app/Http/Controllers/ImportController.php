@@ -75,25 +75,29 @@ class ImportController extends Controller
             return in_array($item->account_type, $accounts);
         });
 
-        $mapped = $transactions->map(function($item) {
+        $importCount = 0;
+
+        foreach($transactions as $item){
             $record = [
                 'date'                  => new Carbon($item->transaction_date),
                 'account'               => $item->account_type,
-                'description'           => ucwords(strtolower($item->description_1)),
                 'imported_description1' => $item->description_1,
                 'imported_description2' => $item->description_2,
                 'amount'                => $item->cad * -1,
-                'created_at'            => Carbon::now(),
-                'updated_at'            => Carbon::now(),
             ];
 
-            $record['category'] = $this->categories->getCategory($record);
-            
-            return $record;
-        });
+            $t = Transaction::firstOrNew($record);
+            if (!$t->exists) {
+                $record['description'] = ucwords(strtolower($record['imported_description1']));
+                $t->description = $record['description'];
+                $t->category = $this->categories->getCategory($record);
+                $t->save();
+                $importCount++;
+            }            
+        }
+
         
-        Transaction::insert($mapped->toArray());
-        $import = Transaction::orderby('created_at', 'desc')->limit($mapped->count())->get();
+        $import = Transaction::orderby('created_at', 'desc')->limit($importCount)->get();
 
         return view('transactions.index', [
                 'transactions'  => $import,
