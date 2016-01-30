@@ -8,6 +8,7 @@
     "font-awesome": "~4.5.0",
     "dropzone": "~4.2.0",
     "bootstrap-confirmation2": "^2.2.0",
-    "datatables": "^1.10.10"
+    "datatables": "^1.10.10",
+    "datatables-responsive": "~2.0.1"
   }
 }

@@ -24,6 +24,11 @@ elixir(function(mix) {
             '../bower/datatables/media/css/dataTables.bootstrap.min.css'
         	], 'public/css/vendor.css')
 
+        .sass([
+            '../bower/datatables-responsive/css/responsive.bootstrap.scss',
+            '../bower/datatables-responsive/css/responsive.dataTables.scss'
+            ], 'public/css/datatables-responsive.css')
+
         .styles([
             '../bower/dropzone/dist/min/dropzone.min.css'
             ], 'public/css/dropzone.css')
@@ -38,6 +43,8 @@ elixir(function(mix) {
         	'../bower/jquery/dist/jquery.min.js',
         	'../bower/bootstrap/dist/js/bootstrap.min.js',
             '../bower/datatables/media/js/jquery.dataTables.min.js',
+            '../bower/datatables-responsive/js/dataTables.responsive.js',
+            '../bower/datatables-responsive/js/responsive.bootstrap.js',
         	'../bower/typeahead.js/dist/typeahead.bundle.min.js',
             '../bower/x-editable/dist/bootstrap3-editable/js/bootstrap-editable.min.js',
             '../bower/x-editable/dist/inputs-ext/typeaheadjs/typeaheadjs.js',
@@ -53,6 +60,7 @@ elixir(function(mix) {
         .version([
         	'css/app.css',
         	'css/vendor.css',
+            'css/datatables-responsive.css',
             'css/dropzone.css',
         	'js/vendor.js',
         	'js/app.js',
