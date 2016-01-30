@@ -5,7 +5,7 @@
     <div class="row">
         <div class="col-md-10 col-md-offset-1">
             <div class="panel panel-default">
-                <div class="panel-heading">@yield('title', 'This Month')
+                <div class="panel-heading">{{ $title or 'This Month' }}
                     <a class="btn btn-xs btn-default pull-right" href="/transactions/create"><i class="fa fa-plus"></i> New Transaction</a>
                 </div>
 
@@ -13,7 +13,7 @@
 
                     <table class="table responsive" 
                         data-paging="false" 
-                        data-order='[[ 1, "asc" ]]' >
+                        data-order='[[ 0, "asc" ]]' >
                         <thead>
                             <tr>
                                 <th class="col-xs-1 col-sm-2" data-priority="1">Date</th>
@@ -25,7 +25,7 @@
                             </tr>
                         </thead>
                         <tbody>
-                            @foreach ($transactions as $t)
+                            @foreach ($transactions->sortBy('date') as $t)
                             <tr>
                                 <td>{{ $t->date->format('Y-m-d') }}</td>
                                 <td>{{ $t->description }}</td>
