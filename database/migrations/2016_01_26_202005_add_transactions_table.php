@@ -20,7 +20,7 @@ class AddTransactionsTable extends Migration
             $table->string('category')->nullable();
             $table->float('amount');
             $table->string('imported_description1');
-            $table->string('imported_description2');
+            $table->string('imported_description2')->nullable();
             $table->timestamps();
 
         });

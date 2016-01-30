@@ -19,7 +19,7 @@ class Transaction extends Model
         return $query->whereBetween('date', [
 	        	$month->startOfMonth()->toDateTimeString(),
 	        	$month->endOfMonth()->toDateTimeString(),
-        	])->orderBy('date', 'asc');
+        	]);
     }
 
 }
