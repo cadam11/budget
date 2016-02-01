@@ -15,7 +15,7 @@
                         <li><del>Manage rules for auto-assignment of categories</del></li>
                         <li>Manage notifications for approaching/over budget</li>
                         <li>Handle income categories as well</li>
-                        <li>Deal with duplicate incoming transactions</li>
+                        <li><del>Deal with duplicate incoming transactions</del></li>
                     </ul>
 
                 </div>
