@@ -5,7 +5,27 @@
     <div class="row">
         <div class="col-md-10 col-md-offset-1">
             <div class="panel panel-default">
-                <div class="panel-heading">This Month</div>
+                <form class="form-inline">
+                <div class="panel-heading">
+                    <div class="input-group">
+                        <span class="input-group-btn">
+                            <a class="btn btn-default" href="/home?basedate={{ (new Carbon\Carbon($basedate))->subMonth() }}"><i class="fa fa-chevron-left"></i></a>
+                        </span>                    
+                        <select name="basedate" class="selectpicker form-control" onchange="this.form.submit()">
+                            @for ($i = -3; $i <= 3; $i++)
+                            <option 
+                                @if ($i == 0) selected @endif 
+                                value="{{ (new Carbon\Carbon($basedate))->addMonths($i) }}">
+                                {{ (new Carbon\Carbon($basedate))->addMonths($i)->format('F Y') }}
+                            </option>
+                            @endfor
+                        </select>
+                        <span class="input-group-btn">
+                            <a class="btn btn-default"  href="/home?basedate={{ (new Carbon\Carbon($basedate))->addMonth() }}"><i class="fa fa-chevron-right"></i></a>
+                        </span>
+                    </div>
+                </div>
+                </form>
 
                 <div class="panel-body">
 
