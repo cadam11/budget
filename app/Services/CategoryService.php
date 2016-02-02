@@ -27,9 +27,9 @@ class CategoryService {
 	public function getCategory($row) {
 		$c = $this->matchesBoth($row);
 		if (!$c) {
-			$c = $this->matchesPattern($row);
+			$c = $this->matchesPatternOnly($row);
 			if (!$c) {
-				$c = $this->matchesAmount($row);
+				$c = $this->matchesAmountOnly($row);
 			}
 		}
 		return $c;
@@ -40,9 +40,9 @@ class CategoryService {
 	 * @param  Array $row An array of values for a candiate Transcation
 	 * @return String|null     The matched category, or null if no match
 	 */
-	protected function matchesAmount($row){ 
+	protected function matchesAmountOnly($row){ 
 		$rule = $this->rules->first(function($key, $value) use ($row) {
-			return ($row['amount'] == $value->amount);
+			return ($value->pattern == null && $row['amount'] == $value->amount);
 		});
 		if ($rule) return $rule->category;
 		else return null;
@@ -53,9 +53,9 @@ class CategoryService {
 	 * @param  Array $row An array of values for a candiate Transcation
 	 * @return String|null     The matched category, or null if no match
 	 */
-	protected function matchesPattern($row){ 
+	protected function matchesPatternOnly($row){ 
 		$rule = $this->rules->first(function($key, $value) use ($row) {
-			return (strpos($row['description'], $value->pattern) !== false);
+			return ($value->amount == null && strpos($row['description'], $value->pattern) !== false);
 		});
 		if ($rule) return $rule->category;
 		else return null;
