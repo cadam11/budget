@@ -31,7 +31,8 @@ class TransactionController extends Controller
         $month = (new Carbon($request->get('basedate')))->startOfMonth();
 
         return view('transactions.index', [
-                'transactions'=>Transaction::month($month)->get()
+                'transactions'=>Transaction::month($month)->get(),
+                'basedate' => $month,
             ]);
     }
 
