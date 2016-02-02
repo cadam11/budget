@@ -6,9 +6,27 @@
     <div class="row">
         <div class="col-md-10 col-md-offset-1">
             <div class="panel panel-default">
-                <div class="panel-heading">This Month
-                    <a class="btn btn-xs btn-default pull-right" href="/budgets/create"><i class="fa fa-plus"></i> New Budget</a>
+                <form class="form-inline">
+                <div class="panel-heading">
+                    <div class="input-group">
+                        <select name="basedate" class="selectpicker form-control">
+                            @for ($i = -3; $i <= 3; $i++)
+                            <option 
+                                @if ($i == 0)
+                                selected
+                                @endif 
+                                value="{{ (new Carbon\Carbon($basedate))->addMonths($i) }}">
+                                {{ (new Carbon\Carbon($basedate))->addMonths($i)->format('F Y') }}
+                            </option>
+                            @endfor
+                        </select>
+                        <span class="input-group-btn">
+                            <button class="btn btn-secondary" type="submit"><i class="fa fa-chevron-right"></i></button>
+                        </span>
+                    </div>
+                    <a class="btn btn-xs btn-default pull-right" href="/budgets/create?{{ $basedate }}"><i class="fa fa-plus"></i> New Budget</a>
                 </div>
+                </form>
 
                 <div class="panel-body">
 
