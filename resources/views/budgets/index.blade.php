@@ -9,19 +9,20 @@
                 <form class="form-inline">
                 <div class="panel-heading">
                     <div class="input-group">
-                        <select name="basedate" class="selectpicker form-control">
+                        <span class="input-group-btn">
+                            <a class="btn btn-default" href="/budgets?basedate={{ (new Carbon\Carbon($basedate))->subMonth() }}"><i class="fa fa-chevron-left"></i></a>
+                        </span>                    
+                        <select name="basedate" class="selectpicker form-control" onchange="this.form.submit()">
                             @for ($i = -3; $i <= 3; $i++)
                             <option 
-                                @if ($i == 0)
-                                selected
-                                @endif 
+                                @if ($i == 0) selected @endif 
                                 value="{{ (new Carbon\Carbon($basedate))->addMonths($i) }}">
                                 {{ (new Carbon\Carbon($basedate))->addMonths($i)->format('F Y') }}
                             </option>
                             @endfor
                         </select>
                         <span class="input-group-btn">
-                            <button class="btn btn-secondary" type="submit"><i class="fa fa-chevron-right"></i></button>
+                            <a class="btn btn-default"  href="/budgets?basedate={{ (new Carbon\Carbon($basedate))->addMonth() }}"><i class="fa fa-chevron-right"></i></a>
                         </span>
                     </div>
                     <a class="btn btn-xs btn-default pull-right" href="/budgets/create?basedate={{ $basedate }}"><i class="fa fa-plus"></i> New Budget</a>
