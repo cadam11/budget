@@ -17,8 +17,6 @@ class Budget extends Model
      */
     public function scopeMonth($query, $month)
     {
-        return $query->where('month', $month->startOfMonth()->toDateTimeString())
-			->orderBy('variable', 'desc')
-			->orderBy('category');
+        return $query->where('month', $month->startOfMonth()->toDateTimeString());
     }    
 }
