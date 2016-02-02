@@ -5,9 +5,33 @@
     <div class="row">
         <div class="col-md-10 col-md-offset-1">
             <div class="panel panel-default">
-                <div class="panel-heading">{{ $title or 'This Month' }}
+                <form class="form-inline">
+                <div class="panel-heading">
+                    @if (isset($title)) {{ $title }}
+                    @elseif (isset($basedate))
+                    <div class="input-group">
+                        <span class="input-group-btn">
+                            <a class="btn btn-default" href="/transactions?basedate={{ (new Carbon\Carbon($basedate->startOfMonth()))->subMonth() }}"><i class="fa fa-chevron-left"></i></a>
+                        </span>                    
+                        <select name="basedate" class="selectpicker form-control" onchange="this.form.submit()">
+                            @for ($i = -3; $i <= 3; $i++)
+                            <option 
+                                @if ($i == 0) selected @endif 
+                                value="{{ (new Carbon\Carbon($basedate->startOfMonth()))->addMonths($i) }}">
+                                {{ (new Carbon\Carbon($basedate))->addMonths($i)->format('F Y') }}
+                            </option>
+                            @endfor
+                        </select>
+                        <span class="input-group-btn">
+                            <a class="btn btn-default"  href="/transactions?basedate={{ (new Carbon\Carbon($basedate->startOfMonth()))->addMonth() }}"><i class="fa fa-chevron-right"></i></a>
+                        </span>
+                    </div>
+                    @else
+                    This month
+                    @endif
                     <a class="btn btn-xs btn-default pull-right" href="/transactions/create"><i class="fa fa-plus"></i> New Transaction</a>
                 </div>
+                </form>
 
                 <div class="panel-body">
 
