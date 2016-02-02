@@ -12,7 +12,9 @@
 
                 <div class="panel-body">
 
-                    <table class="table table-responsive">
+                    <table class="table table-responsive responsive"
+                        data-paging="false" 
+                        data-order='[[ 2, "desc" ], [0, "asc"]]' >
                         <thead>
                             <tr>
                                 <th class="col-xs-2 col-sm-2">Category</th>
@@ -83,5 +85,26 @@ $('.editable-variable').editable({
         if(response.status == 'error') return response.message;
     }
 });
+
+
+var table = $('table').DataTable({
+    "order": [[ 2, 'desc' ]],
+    "drawCallback": function ( settings ) {
+        var api = this.api();
+        var rows = api.rows( {page:'current'} ).nodes();
+        var last=null;
+        api.column(2, {page:'current'} ).data().each( function ( group, i ) {
+            groupval = $(group).text();
+            if ( last !== groupval && settings.aLastSort[0].col == 2) {
+                $(rows).eq( i ).before(
+                    '<tr class="bg-primary"><td colspan="3">'+groupval+'</td></tr>'
+                );
+                last = groupval;
+            }
+        } );
+    }
+} );
+
+
 
 @endsection
