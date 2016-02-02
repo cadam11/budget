@@ -21,7 +21,8 @@ elixir(function(mix) {
             '../bower/typeahead.js-bootstrap3.less/typeahead.css',
             '../bower/x-editable/dist/bootstrap3-editable/css/bootstrap-editable.css',
             '../bower/x-editable/dist/inputs-ext/typeaheadjs/lib/typeahead.js-bootstrap.css',
-            '../bower/datatables/media/css/dataTables.bootstrap.min.css'
+            '../bower/datatables/media/css/dataTables.bootstrap.min.css',
+            '../bower/bootstrap-select/dist/css/bootstrap-select.min.css'
         	], 'public/css/vendor.css')
 
         .sass([
@@ -48,7 +49,8 @@ elixir(function(mix) {
         	'../bower/typeahead.js/dist/typeahead.bundle.min.js',
             '../bower/x-editable/dist/bootstrap3-editable/js/bootstrap-editable.min.js',
             '../bower/x-editable/dist/inputs-ext/typeaheadjs/typeaheadjs.js',
-            '../bower/bootstrap-confirmation2/bootstrap-confirmation.min.js'
+            '../bower/bootstrap-confirmation2/bootstrap-confirmation.min.js',
+            '../bower/bootstrap-select/dist/js/bootstrap-select.min.js'
         	], 'public/js/vendor.js')
 
         .scripts([
