@@ -24,7 +24,7 @@
                             <button class="btn btn-secondary" type="submit"><i class="fa fa-chevron-right"></i></button>
                         </span>
                     </div>
-                    <a class="btn btn-xs btn-default pull-right" href="/budgets/create?{{ $basedate }}"><i class="fa fa-plus"></i> New Budget</a>
+                    <a class="btn btn-xs btn-default pull-right" href="/budgets/create?basedate={{ $basedate }}"><i class="fa fa-plus"></i> New Budget</a>
                 </div>
                 </form>
 
