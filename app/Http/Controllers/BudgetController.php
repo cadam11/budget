@@ -30,10 +30,7 @@ class BudgetController extends Controller
     {
         $month = (new Carbon($request->get('basedate')))->startOfMonth();
 
-        $budgets = Budget::where('month', $month->toDateTimeString())
-            ->orderBy('variable', 'desc')
-            ->orderBy('category')
-            ->get();
+        $budgets = Budget::month($month)->get();
         
         return view('budgets.index', [
             'budgets' => $budgets,
