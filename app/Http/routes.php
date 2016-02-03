@@ -54,6 +54,8 @@ Route::group(['middleware' => 'web'], function () {
     Route::post('/import', 'ImportController@store');
     Route::get('/import/parse', 'ImportController@parse');
 
+    Route::post('/api/import', 'ImportController@apiImport');
+
     Route::get('/settings/rules', 'RulesController@index');
     Route::get('/settings/rules/create', 'RulesController@create');
     Route::get('/settings/rules/{id}/delete', 'RulesController@destroy');
