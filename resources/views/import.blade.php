@@ -13,7 +13,7 @@
 
                 <div class="panel-body">
 
-                    <form action="/import" class="dropzone" id="my-awesome-dropzone">
+                    <form action="/import" id="my-awesome-dropzone" method="post">
                         {!! csrf_field() !!}
                         <div class="fallback">
                             <input name="file" type="file" />
@@ -28,6 +28,12 @@
         </div>
     </div>
 </div>
+<div class="hidden">
+    <form action="/import" id="direct-upload" method="post" enctype="multipart/form-data">
+        {!! csrf_field() !!}
+        <input name="file" id="direct-file" type="file" />
+    </form>
+</div>
 @endsection
 
 @section('srcscript')
@@ -35,13 +41,5 @@
 @endsection
 
 @section('script')
-Dropzone.options.myAwesomeDropzone = {
-    success: function(file, done) {
-        $("#response").html("It worked!");
-        location.href="/import/parse";
-    },
-    error: function(file, response) {
-        $("#response").html(response);
-    }
-}
+
 @endsection
