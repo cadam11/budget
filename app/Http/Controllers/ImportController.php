@@ -2,6 +2,7 @@
 
 namespace Budget\Http\Controllers;
 
+use Log;
 use Illuminate\Http\Request;
 use Excel;
 use Carbon\Carbon;
@@ -50,11 +51,11 @@ class ImportController extends Controller
     {
     	$file = $request->file('file');
 
-    	if ($file->getMimeType() != "text/plain")
+    	if ($file == null || $file->getMimeType() != "text/plain")
     		return response()->json('error: '.$file->getMimeType(), 400);
 
-    	$csv = Excel::load($file->getRealPath(), function($reader) {})->get();
-    	$request->session()->put('file', $csv);
+        $csv = $this->readFile($file);
+        $request->session()->put('file', $csv);
 
         return response()->json('success', 200);
     }
@@ -69,6 +70,48 @@ class ImportController extends Controller
         if (!$request->session()->has('file')) return $this->index();
 
     	$csv = $request->session()->pull('file');
+        $importCount = $this->importRows($csv);
+        
+        $imported = Transaction::orderby('created_at', 'desc')->limit($importCount)->get();
+
+        return view('transactions.index', [
+                'transactions'  => $imported,
+                'title'         => 'Imported Transactions',
+            ]);
+    }
+
+    /**
+     * A streamlined file input specifically for receiving import files by api
+     * 
+     * @param  Request $request The http request (DI)
+     * @return \Illuminate\Http\Response
+     */
+    public function apiImport(Request $request) {
+
+        $csv = $this->readFile($request->file('file'));
+        $importCount = $this->importRows($csv);
+
+        return response()->json(['success', "$importCount rows imported"], 200);
+    }
+
+    /**
+     * Read raw csv and create a usable collection of rows
+     * 
+     * @param  Symfony\Component\HttpFoundation\File\UploadedFile $file The uploaded file containing raw csv
+     * @return Maatwebsite\Excel\Collections\RowCollection       A collection of rows
+     */
+    protected function readFile($file) {
+        $csv = Excel::load($file->getRealPath(), function($reader) {})->get();
+        return $csv;
+    }
+
+    /**
+     * Parses the csv object into transctions
+     * 
+     * @param  Maatwebsite\Excel\Collections\RowCollection $csv The raw csv parsed into a collection of rows
+     * @return int      A count of the number of transactions actually imported
+     */
+    protected function importRows($csv) {
 
         $accounts = ['MasterCard', 'Chequing'];
         $transactions = $csv->filter(function($item) use ($accounts) {
@@ -96,12 +139,6 @@ class ImportController extends Controller
             }            
         }
 
-        
-        $import = Transaction::orderby('created_at', 'desc')->limit($importCount)->get();
-
-        return view('transactions.index', [
-                'transactions'  => $import,
-                'title'         => 'Imported Transactions',
-            ]);
+        return $importCount;
     }
 }
