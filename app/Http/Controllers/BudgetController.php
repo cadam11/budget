@@ -36,7 +36,7 @@ class BudgetController extends Controller
      */
     public function index()
     {
-        $budgets = Budget::month($this->month)->get();
+        $budgets = Budget::month($this->month)->get()->groupBy('type');
         
         return view('budgets.index', [
             'budgets' => $budgets,
