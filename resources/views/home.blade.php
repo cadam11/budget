@@ -29,16 +29,18 @@
 
                 <div class="panel-body">
 
+                    @if (isset($budgets['Income']))
+                    <h3>Income</h3>
                     <table class="table table-responsive">
                         <thead>
                             <tr>
                                 <th class="col-xs-4 col-sm-3">Category</th>
-                                <th class="col-xs-7 col-sm-8">Used</th>
+                                <th class="col-xs-7 col-sm-8">Received</th>
                                 <th class="col-xs-1 col-sm-1">Left</th>
                             </tr>
                         </thead>
                         <tbody>
-                        @foreach ($budgets as $budget)
+                        @foreach ($budgets['Income'] as $budget)
                             <tr>
                                 <td>{{$budget->category or "Uncategorized"}}</td>
                                 <td>
@@ -55,7 +57,38 @@
                         @endforeach
                         </tbody>
                     </table>
+                    @endif
+                    
 
+                    @if (isset($budgets['Expense']))
+                    <h3>Expenses</h3>
+                    <table class="table table-responsive">
+                        <thead>
+                            <tr>
+                                <th class="col-xs-4 col-sm-3">Category</th>
+                                <th class="col-xs-7 col-sm-8">Used</th>
+                                <th class="col-xs-1 col-sm-1">Left</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                        @foreach ($budgets['Expense'] as $budget)
+                            <tr>
+                                <td>{{$budget->category or "Uncategorized"}}</td>
+                                <td>
+                                    <div class="progress">
+                                        <div class="progress-bar progress-bar-{{$budget->status}}" role="progressbar" style="width:{{$budget->used}}%">
+                                            {{money_format("$%n", $budget->actual)}}
+                                        </div>
+                                    </div>
+                                </td>
+                                <td class="{{ ($budget->left < 0) ? 'over-budget' : '' }}">
+                                    {{money_format("$%n", $budget->left)}}
+                                </td>
+                            </tr>
+                        @endforeach
+                        </tbody>
+                    </table>
+                    @endif
 
                 </div>
             </div>
