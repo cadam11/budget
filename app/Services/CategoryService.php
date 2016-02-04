@@ -55,7 +55,7 @@ class CategoryService {
 	 */
 	protected function matchesPatternOnly($row){ 
 		$rule = $this->rules->first(function($key, $value) use ($row) {
-			return ($value->amount == null && strpos($row['description'], $value->pattern) !== false);
+			return ($value->amount == null && strpos($row['description'], ucwords(strtolower($value->pattern))) !== false);
 		});
 		if ($rule) return $rule->category;
 		else return null;
@@ -69,7 +69,7 @@ class CategoryService {
 	 */
 	protected function matchesBoth($row){ 
 		$rule = $this->rules->first(function($key, $value) use ($row) {
-			return (strpos($row['description'], $value->pattern) !== false)
+			return (strpos($row['description'], ucwords(strtolower($value->pattern))) !== false)
 				&& ($row['amount'] == $value->amount);
 		});
 		if ($rule) return $rule->category;
