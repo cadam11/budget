@@ -14,7 +14,7 @@
                         <li>Set which accounts are included in import (Currently hard-coded to MasterCard and Chequing)</li>
                         <li><del>Manage rules for auto-assignment of categories</del></li>
                         <li>Manage notifications for approaching/over budget</li>
-                        <li>Handle income categories as well</li>
+                        <li><del>Handle income categories as well</del></li>
                         <li><del>Deal with duplicate incoming transactions</del></li>
                     </ul>
 
