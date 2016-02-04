@@ -8,17 +8,23 @@ use Carbon\Carbon;
 use Budget\Transaction;
 use Budget\Http\Requests;
 use Budget\Http\Controllers\Controller;
+use Budget\Exceptions\JsonException;
 
 class TransactionController extends Controller
 {
+
+    protected $month;
+
     /**
      * Create a new controller instance.
      *
      * @return void
      */
-    public function __construct()
+    public function __construct(Request $request)
     {
         $this->middleware('auth');
+
+        $this->month = (new Carbon($request->get('basedate')))->startOfMonth();
     }
 
     /**
@@ -26,13 +32,11 @@ class TransactionController extends Controller
      * 
      * @return \Illuminate\Http\Response
      */
-    public function index(Request $request)
+    public function index()
     {
-        $month = (new Carbon($request->get('basedate')))->startOfMonth();
-
         return view('transactions.index', [
-                'transactions'=>Transaction::month($month)->get(),
-                'basedate' => $month,
+                'transactions'=>Transaction::month($this->month)->get(),
+                'basedate' => $this->month,
             ]);
     }
 
@@ -78,7 +82,7 @@ class TransactionController extends Controller
             $t->delete();
             return response()->json(['status'=>'success'], 200);
         } catch (\Exception $e) {
-            return $this->handleError($e);
+            throw new JsonException($e);
         }
     }
 
@@ -102,21 +106,9 @@ class TransactionController extends Controller
             $t->setAttribute($request->input('name'), $value);
             $t->save();
         } catch (\Exception $e) {
-            return $this->handleError($e);
+            throw new JsonException($e);
         }
         
     }
 
-    /**
-     * Creates a JSON response for when exceptions happen
-     * @param  \Exception $e [description]
-     * @return [type]        [description]
-     */
-    public function handleError(\Exception $e) {
-        // TODO: Make this into a provider
-        return response()->json([
-                'status'=>'error', 
-                'message'=>$e->getMessage()
-            ], 400);
-    }
 }
