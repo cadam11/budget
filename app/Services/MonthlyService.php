@@ -68,7 +68,7 @@ class MonthlyService {
 		}
 		$unbudgeted->left = 0 - $unbudgeted->actual;
 
-		$budgets->push($unbudgeted);
+		$budgets->prepend($unbudgeted);
 
 		return $budgets;		
 	}
