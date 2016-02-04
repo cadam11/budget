@@ -30,6 +30,8 @@ class MonthlyService {
 			$row = $actuals->where('category', $budget->category)->first();
 			$budget->actual = $row == null ? 0 : $row->actual;
 
+			if ($budget->type == 'Income') $budget->actual *= -1;
+
 			if ($budget->amount == 0) 
 				$budget->used = 100;
 			else
@@ -37,9 +39,16 @@ class MonthlyService {
 
 			$budget->left = $budget->amount - $budget->actual;
 
-			if ($budget->used < 90) $budget->status = 'success';
-			else if ($budget->used > 103) $budget->status = 'danger';
-			else $budget->status = 'warning';
+			if ($budget->type == 'Income') {
+				if ($budget->used < 80) $budget->status = 'danger';
+				else if ($budget->used < 97) $budget->status = 'warning';
+				else $budget->status = 'success';
+			}
+			else {
+				if ($budget->used < 90) $budget->status = 'success';
+				else if ($budget->used > 103) $budget->status = 'danger';
+				else $budget->status = 'warning';
+			}
 
 			return $budget;
 
@@ -58,11 +67,14 @@ class MonthlyService {
 		$unbudgeted->used = 100;
 		$unbudgeted->status = 'info';
 
+
+		$ignored = Budget::ignored($basedate)->get()->pluck('category')->all();
 		
 		// TODO: Account for money in categories better
 		foreach ($actuals as $row) {
 			if (!$budgets->contains('category', $row->category)
-				&& !in_array($row->category, ["Transfer","Payroll","Government Payment"])) {
+				&& !in_array($row->category, $ignored)) {
+
 				$unbudgeted->actual += $row->actual;
 			}
 		}
