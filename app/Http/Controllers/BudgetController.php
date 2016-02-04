@@ -8,17 +8,25 @@ use Carbon\Carbon;
 use Budget\Budget;
 use Budget\Http\Requests;
 use Budget\Http\Controllers\Controller;
+use Budget\Exceptions\JsonException;
 
 class BudgetController extends Controller
 {
+    /**
+     * Holds the basedate month from the Request
+     * @var Carbon\Carbon
+     */
+    protected $month;
+
     /**
      * Create a new controller instance.
      *
      * @return void
      */
-    public function __construct()
+    public function __construct(Request $request)
     {
         $this->middleware('auth');
+        $this->month = (new Carbon($request->get('basedate')))->startOfMonth();
     }
 
     /**
@@ -26,15 +34,13 @@ class BudgetController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index(Request $request)
+    public function index()
     {
-        $month = (new Carbon($request->get('basedate')))->startOfMonth();
-
-        $budgets = Budget::month($month)->get();
+        $budgets = Budget::month($this->month)->get();
         
         return view('budgets.index', [
             'budgets' => $budgets,
-            'basedate' => $month,
+            'basedate' => $this->month,
             ]);
     }
 
@@ -43,11 +49,10 @@ class BudgetController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create(Request $request)
+    public function create()
     {
-        $month = (new Carbon($request->get('basedate')))->startOfMonth();
         return view('budgets.create', [
-            'basedate' => $month,
+            'basedate' => $this->month,
             ]);
     }
 
@@ -60,8 +65,7 @@ class BudgetController extends Controller
     public function store(Request $request)
     {
         $post = $request->all();
-        $month = (new Carbon($request->get('basedate')))->startOfMonth();
-        $post['month'] = $month->toDateTimeString();
+        $post['month'] = $this->month->toDateTimeString();
 
         $fields = ['amount', 'category', 'month', 'variable'];
         $b = Budget::create(array_only($post, $fields));
@@ -89,7 +93,7 @@ class BudgetController extends Controller
             $b->setAttribute($request->input('name'), $request->input('value'));
             $b->save();
         } catch (\Exception $e) {
-            return $this->handleError($e);
+            throw new JsonException($e);
         }
         
     }
@@ -108,21 +112,9 @@ class BudgetController extends Controller
             $b->delete();
             return response()->json(['status'=>'success']);
         } catch (\Exception $e) {
-            return $this->handleError($e);
+            throw new JsonException($e);
         }
     }
 
 
-    /**
-     * Creates a JSON response for when exceptions happen
-     * @param  \Exception $e [description]
-     * @return [type]        [description]
-     */
-    public function handleError(\Exception $e) {
-        // TODO: Make this into a provider
-        return response()->json([
-                'status'=>'error', 
-                'message'=>$e->getMessage()
-            ]);
-    }
 }
