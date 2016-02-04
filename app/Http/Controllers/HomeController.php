@@ -29,7 +29,7 @@ class HomeController extends Controller
         $month = (new Carbon($request->get('basedate')))->startOfMonth();
 
         return view('home', [
-            'budgets' => $monthly->getOverview($month),
+            'budgets' => $monthly->getOverview($month)->groupBy('type'),
             'basedate' => $month,
             ]);
     }
