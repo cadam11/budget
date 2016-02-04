@@ -31,10 +31,18 @@
                             <input type="text" class="form-control" id="amount" name="amount" placeholder="Amount">
                         </div>
                         <div class="form-group">
-                            <label for="variable">Type</label>
-                            <select class="form-control" id="variable" name="variable">
+                            <label for="variable">Variability</label>
+                            <select class="form-control selectpicker" id="variable" name="variable">
                                 <option selected value="0">Fixed</option>
                                 <option value="1">Variable</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="type">Type</label>
+                            <select class="form-control selectpicker" id="type" name="type">
+                                <option selected value="Expense">Expense</option>
+                                <option value="Income">Income</option>
+                                <option value="Ignored">Ignored</option>
                             </select>
                         </div>
                         <input type="submit" value="Save" class="btn btn-primary">
