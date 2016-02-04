@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class Budget extends Model
 {
 	protected $dates = ['month'];
-    protected $fillable = ['category','amount', 'month', 'variable'];
+    protected $fillable = ['category','amount', 'month', 'variable', 'type'];
 
 
      /**
@@ -18,5 +18,12 @@ class Budget extends Model
     public function scopeMonth($query, $month)
     {
         return $query->where('month', $month->startOfMonth()->toDateTimeString());
-    }    
+    }
+
+    public function scopeIgnored($query, $month)
+    {
+        return $query->where('type', 'Ignored')
+            ->where('month', $month->startOfMonth()->toDateTimeString())
+            ->select('category');
+    }
 }

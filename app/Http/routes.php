@@ -49,6 +49,7 @@ Route::group(['middleware' => 'web'], function () {
     Route::get('/budgets', 'BudgetController@index');
     Route::post('/budgets', 'BudgetController@store');
     Route::post('/budgets/{id}', 'BudgetController@update');
+    Route::get('/budgets/{id}/delete', 'BudgetController@destroy');
 
     Route::get('/import', 'ImportController@index');
     Route::post('/import', 'ImportController@store');
