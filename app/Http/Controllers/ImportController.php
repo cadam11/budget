@@ -19,7 +19,7 @@ class ImportController extends Controller
      * @var Budget\Services\CategoryService
      */
     protected $categories;
-
+    
     /**
      * Create a new controller instance.
      *
