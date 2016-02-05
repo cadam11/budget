@@ -67,11 +67,10 @@ class BudgetController extends Controller
         $post = $request->all();
         $post['month'] = $this->month->toDateTimeString();
 
-        $fields = ['amount', 'category', 'month', 'variable'];
-        $b = Budget::create(array_only($post, $fields));
+        $b = Budget::create($post);
         $b->save();
 
-        $request->session()->flash('alert-success', "New budget saved for $b->category in ".$this->month->format('F Y'));
+        $request->session()->flash('alert-success', "New $b->type budget saved for $b->category in ".$this->month->format('F Y'));
 
         return $this->index($request);
     }
