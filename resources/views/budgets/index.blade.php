@@ -42,6 +42,7 @@
                                 <th class="col-xs-2 col-sm-2">Category</th>
                                 <th class="col-xs-1 col-sm-1">Amount</th>
                                 <th class="col-xs-1 col-sm-1">Type</th>
+                                <th class="col-xs-1" data-orderable="false"></th>
                             </tr>
                         </thead>
                         <tbody>
@@ -108,6 +109,7 @@
                                 <th class="col-xs-2 col-sm-2">Category</th>
                                 <th class="col-xs-1 col-sm-1">Amount</th>
                                 <th class="col-xs-1 col-sm-1">Type</th>
+                                <th class="col-xs-1" data-orderable="false"></th>
                             </tr>
                         </thead>
                         <tbody>
@@ -177,6 +179,7 @@
                                 <th class="col-xs-2 col-sm-2">Category</th>
                                 <th class="col-xs-1 col-sm-1">Amount</th>
                                 <th class="col-xs-1 col-sm-1">Type</th>
+                                <th class="col-xs-1" data-orderable="false"></th>
                             </tr>
                         </thead>
                         <tbody>
@@ -245,7 +248,7 @@ var table = $('table.grouped-by-variable').DataTable({
             groupval = $(group).text();
             if ( last !== groupval && settings.aLastSort[0].col == 2) {
                 $(rows).eq( i ).before(
-                    '<tr class="bg-primary"><td colspan="3">'+groupval+'</td></tr>'
+                    '<tr class="bg-primary"><td colspan="4">'+groupval+'</td></tr>'
                 );
                 last = groupval;
             }
