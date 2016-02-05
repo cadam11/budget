@@ -71,6 +71,20 @@
                                         data-value= "{{$b->variable}}">
 
                                 </td>
+                                <td class="text-right">
+                                    <a 
+                                        href="#" 
+                                        id="delete"
+                                        data-toggle="confirmation"
+                                        data-popout="true"
+                                        data-singleton="true"
+                                        data-btn-ok-icon="fa fa-check"
+                                        data-btn-cancel-icon="fa fa-times" 
+                                        data-pk="{{ $b->id }}"
+                                        class="text-muted">
+                                        <i class="fa fa-times"></i>
+                                    </a>
+                                </td>
                             </tr>
                             @endforeach
                         </tbody>
@@ -123,6 +137,20 @@
                                         data-value= "{{$b->variable}}">
 
                                 </td>
+                                <td class="text-right">
+                                    <a 
+                                        href="#" 
+                                        id="delete"
+                                        data-toggle="confirmation"
+                                        data-popout="true"
+                                        data-singleton="true"
+                                        data-btn-ok-icon="fa fa-check"
+                                        data-btn-cancel-icon="fa fa-times" 
+                                        data-pk="{{ $b->id }}"
+                                        class="text-muted">
+                                        <i class="fa fa-times"></i>
+                                    </a>
+                                </td>
                             </tr>
                             @endforeach
                         </tbody>
@@ -158,6 +186,20 @@
                                 <td>
                                 </td>
                                 <td>
+                                </td>
+                                <td class="text-right">
+                                    <a 
+                                        href="#" 
+                                        id="delete"
+                                        data-toggle="confirmation"
+                                        data-popout="true"
+                                        data-singleton="true"
+                                        data-btn-ok-icon="fa fa-check"
+                                        data-btn-cancel-icon="fa fa-times" 
+                                        data-pk="{{ $b->id }}"
+                                        class="text-muted">
+                                        <i class="fa fa-times"></i>
+                                    </a>
                                 </td>
                             </tr>
                             @endforeach
@@ -212,5 +254,19 @@ var table = $('table.grouped-by-variable').DataTable({
 } );
 
 
+$('[data-toggle="confirmation"]').confirmation({
+    onConfirm: function() {
+        var row = $(this).parents('tr');
+       $.get('/budgets/' + $(this).data('pk') + '/delete')
+        .done(function(response){
+            console.log("Row deleted");
+            console.log($(row));
+            $(row).remove();
+        })
+        .fail(function(response){ 
+            console.error(response);
+        });
+    }
+});
 
 @endsection
