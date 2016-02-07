@@ -25,7 +25,15 @@
                             <a class="btn btn-default"  href="/budgets?basedate={{ (new Carbon\Carbon($basedate))->addMonth() }}"><i class="fa fa-chevron-right"></i></a>
                         </span>
                     </div>
-                    <a class="btn btn-xs btn-default pull-right" href="/budgets/create?basedate={{ $basedate }}"><i class="fa fa-plus"></i> New Budget</a>
+                    <div class="btn-group pull-right">
+                        <a class="btn btn-xs btn-default" href="/budgets/create?basedate={{ $basedate }}"><i class="fa fa-plus"></i> New Budget</a>
+                        <button type="button" class="btn btn-xs btn-default dropdown-toggle" data-toggle="dropdown">
+                            <span class="caret"></span>
+                        </button>
+                        <ul class="dropdown-menu">
+                            <li><a href="/budgets/copy?basedate={{ $basedate }}"><i class="fa fa-clone"></i> Copy from last month</a></li>
+                        </ul>
+                    </div>
                 </div>
                 </form>
 
