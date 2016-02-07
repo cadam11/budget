@@ -7,27 +7,28 @@ use Budget\Transaction;
 use Budget\Budget;
 use Carbon\Carbon;
 
-class MonthlyService {
+class OverviewService {
 
 	/**
 	 * Gets a list of the overview budget lines for a given month
 	 * @param  Carbon|null $basedate [description]
 	 * @return [type]           [description]
 	 */
-	public function getOverview(Carbon $basedate = null) {
+	public function get(Carbon $basedate = null) {
 		if ($basedate == null) $basedate = Carbon::now();
 
 		$actuals = Transaction::month($basedate)
 					->selectRaw('category, sum(amount) as actual')
 					->groupBy('category')
-					->get();
+					->get()
+					->keyBy('category');
 		
 
 		$budgets = Budget::month($basedate)->get();
 
 
 		$budgets->transform(function($budget, $key) use ($actuals) {
-			$row = $actuals->where('category', $budget->category)->first();
+			$row = $actuals->pull($budget->category);
 			$budget->actual = $row == null ? 0 : $row->actual;
 
 			if ($budget->type == 'Income') $budget->actual *= -1;
@@ -55,29 +56,21 @@ class MonthlyService {
 		});
 
 		
+		$ignored = Budget::ignored($basedate)->get()->pluck('category')->all();
+		foreach ($ignored as $category)
+			$actuals->pull($category);
+
 
 		$unbudgeted = new Budget([
 				'category' => 'Unbudgeted',
 				'amount' => 0.0,	// TODO: could be based on what's left of income
 				'variable' => 1,
-
+				'type' => 'Expense',
 			]);
 
-		$unbudgeted->actual = 0.0;
+		$unbudgeted->actual = $actuals->sum('actual');
 		$unbudgeted->used = 100;
 		$unbudgeted->status = 'info';
-
-
-		$ignored = Budget::ignored($basedate)->get()->pluck('category')->all();
-		
-		// TODO: Account for money in categories better
-		foreach ($actuals as $row) {
-			if (!$budgets->contains('category', $row->category)
-				&& !in_array($row->category, $ignored)) {
-
-				$unbudgeted->actual += $row->actual;
-			}
-		}
 		$unbudgeted->left = 0 - $unbudgeted->actual;
 
 		$budgets->prepend($unbudgeted);
