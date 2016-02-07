@@ -116,4 +116,32 @@ class BudgetController extends Controller
     }
 
 
+    /**
+     * Copies budgets from the previous month
+     * 
+     */
+    public function copy() {
+
+        $budgets = Budget::month($this->month->subMonth())->get();
+
+        $month = $this->month->addMonth();
+
+        $budgets->each(function($item, $key) use ($month) {
+            $b = new Budget([
+                    'category'  => $item->category,
+                    'amount'    => $item->amount,
+                    'variable'  => $item->variable,
+                    'type'      => $item->type,
+                    'month'     => $month,
+                ]);
+
+            try {
+                $b->save();
+            } catch (\Exception $ignored) {}
+        });
+
+        return $this->index();
+    }
+
+
 }
