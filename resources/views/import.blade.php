@@ -13,26 +13,28 @@
 
                 <div class="panel-body">
 
-                    <form action="/import" id="my-awesome-dropzone" method="post">
+                    <form action="/transactions/import" class="dropzone" id="my-awesome-dropzone" method="post" style="border: 2px dashed #999">
                         {!! csrf_field() !!}
                         <div class="fallback">
                             <input name="file" type="file" />
                         </div>
+                        <div class="dz-message">
+                            <p class="lead">Drop files here or click to upload.</p>
+                            <ul class="list-group text-muted">
+                                <li class="list-group-item">File type must be text/csv</li>
+                                <li class="list-group-item">First row must contain column names</li>
+                                <li class="list-group-item">Requires: <code>transaction_date</code>, <code>account_type</code>, <code>description_1</code>, <code>cad</code></li>
+                            </ul>
+                        </div>
                     </form>
 
-                    <pre id="response" class="text-danger">
+                    <pre id="response" class="text-danger hidden">
                     </pre>
 
                 </div>
             </div>
         </div>
     </div>
-</div>
-<div class="hidden">
-    <form action="/import" id="direct-upload" method="post" enctype="multipart/form-data">
-        {!! csrf_field() !!}
-        <input name="file" id="direct-file" type="file" />
-    </form>
 </div>
 @endsection
 
@@ -41,5 +43,13 @@
 @endsection
 
 @section('script')
-
+Dropzone.options.myAwesomeDropzone = {
+    success: function(file, done) {
+        $("#response").show().html("It worked!");
+        location.href="/transactions/import/parse";
+    },
+    error: function(file, response) {
+        $("#response").html(response);
+    }
+}
 @endsection
