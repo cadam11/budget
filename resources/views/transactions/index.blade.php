@@ -29,7 +29,16 @@
                     @else
                     This month
                     @endif
-                    <a class="btn btn-xs btn-default pull-right" href="/transactions/create"><i class="fa fa-plus"></i> New Transaction</a>
+                    <div class="btn-group pull-right">
+                        <a class="btn btn-xs btn-default" href="/transactions/create"><i class="fa fa-plus"></i> New Transaction</a>
+                        <button type="button" class="btn btn-xs btn-default dropdown-toggle" data-toggle="dropdown">
+                            <span class="caret"></span>
+                        </button>
+                        <ul class="dropdown-menu">
+                            <li><a href="/transactions/import"><i class="fa fa-cloud-upload"></i> Import transactions</a></li>
+                        </ul>
+                    </div>
+
                 </div>
                 </form>
 
