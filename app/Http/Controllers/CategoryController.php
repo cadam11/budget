@@ -37,7 +37,7 @@ class CategoryController extends Controller
             ->get())->keyBy('category');
 
         
-        return response()->json(array_keys($categories->all()));
+        return response()->json($categories->keys());
     }
 
 

@@ -45,15 +45,16 @@ Route::group(['middleware' => 'web'], function () {
 
     Route::get('/categories', 'CategoryController@index');
 
-    Route::get('/budgets/create', 'BudgetController@create');
     Route::get('/budgets', 'BudgetController@index');
+    Route::get('/budgets/create', 'BudgetController@create');
+    Route::get('/budgets/copy', 'BudgetController@copy');
     Route::post('/budgets', 'BudgetController@store');
     Route::post('/budgets/{id}', 'BudgetController@update');
     Route::get('/budgets/{id}/delete', 'BudgetController@destroy');
 
-    Route::get('/import', 'ImportController@index');
-    Route::post('/import', 'ImportController@store');
-    Route::get('/import/parse', 'ImportController@parse');
+    Route::get('/transactions/import', 'ImportController@index');
+    Route::post('/transactions/import', 'ImportController@store');
+    Route::get('/transactions/import/parse', 'ImportController@parse');
 
     Route::post('/api/import', 'ImportController@apiImport');
 

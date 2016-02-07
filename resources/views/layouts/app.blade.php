@@ -54,7 +54,6 @@
                     @if (!Auth::guest())
                     <li><a href="{{ url('/transactions') }}"><i class="fa fa-shopping-cart"></i> Transactions</a></li>
                     <li><a href="{{ url('/budgets') }}"><i class="fa fa-pie-chart"></i> Budgets</a></li>
-                    <li><a href="{{ url('/import') }}"><i class="fa fa-cloud-upload"></i> Import</a></li>
                     <li class="dropdown">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i class="fa fa-cog"></i> Settings <i class="fa fa-caret-down"></i></a>
                         <ul class="dropdown-menu" role="menu">
