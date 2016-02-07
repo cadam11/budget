@@ -3,7 +3,7 @@
 namespace Budget\Http\Controllers;
 
 use Carbon\Carbon;
-use Budget\Services\MonthlyService;
+use Budget\Services\OverviewService;
 use Budget\Http\Requests;
 use Illuminate\Http\Request;
 
@@ -24,12 +24,12 @@ class HomeController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index(MonthlyService $monthly, Request $request)
+    public function index(OverviewService $overview, Request $request)
     {
         $month = (new Carbon($request->get('basedate')))->startOfMonth();
 
         return view('home', [
-            'budgets' => $monthly->getOverview($month)->groupBy('type'),
+            'budgets' => $overview->get($month)->groupBy('type'),
             'basedate' => $month,
             ]);
     }
