@@ -18,7 +18,7 @@ class OverviewService {
 		if ($basedate == null) $basedate = Carbon::now();
 
 		$actuals = Transaction::month($basedate)
-					->selectRaw('category, sum(amount) as actual')
+					->selectRaw('coalesce(category,rand()) as category, sum(amount) as actual')
 					->groupBy('category')
 					->get()
 					->keyBy('category');
@@ -75,7 +75,7 @@ class OverviewService {
 
 		$budgets->prepend($unbudgeted);
 
-		return $budgets;		
+		return $budgets;
 	}
 
 }
