@@ -13,3 +13,8 @@ $.fn.editable.defaults.params = function (params) {
     params._token = $("#_token").data("token");
     return params;
 };
+
+$('a').click(function() {
+	window.location=$(this).attr('href');
+	return false;
+});
