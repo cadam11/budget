@@ -24,7 +24,10 @@ class OverviewService {
 					->keyBy('category');
 		
 
-		$budgets = Budget::month($basedate)->get();
+		$budgets = Budget::month($basedate)
+			->orderBy('variable', 'desc')
+			->orderBy('category', 'asc')			
+			->get();
 
 
 		$budgets->transform(function($budget, $key) use ($actuals) {
