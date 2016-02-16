@@ -18,7 +18,7 @@
                     <form class="form" action="/budgets" method="post">
                         {!! csrf_field() !!}
                         @if ($basedate)
-                        <input type="hidden" name="month" value="{{$basedate->startOfMonth()->toDateTimeString()}}">
+                        <input type="hidden" name="basedate" value="{{$basedate->startOfMonth()->toDateTimeString()}}">
                         @endif
 
                         <div class="form-group">
