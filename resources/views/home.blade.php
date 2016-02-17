@@ -73,7 +73,7 @@
                         <tbody>
                         @foreach ($budgets['Expense'] as $budget)
                             <tr>
-                                <td>{{$budget->category or "Uncategorized"}}</td>
+                                <td><a href="{{ url('/transactions')."?search=".$budget->category }}">{{$budget->category or "Uncategorized"}}</td>
                                 <td>
                                     <div class="progress">
                                         <div class="progress-bar progress-bar-{{$budget->status}}" role="progressbar" style="width:{{$budget->used}}%">
