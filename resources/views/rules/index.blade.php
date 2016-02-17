@@ -1,5 +1,5 @@
 @extends('layouts.app')
-
+@section('pagetitle', 'Rules')
 @section('content')
 <div id="_token" class="hidden" data-token="{{ csrf_token() }}"></div>
 <div class="container">

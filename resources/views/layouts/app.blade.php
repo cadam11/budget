@@ -8,7 +8,7 @@
     <link rel="apple-touch-icon" href="/apple-touch-icon.png">
     <link rel="apple-touch-startup-image" href="/startup.png">
 
-    <title>Budget</title>
+    <title>Budget - @yield('pagetitle')</title>
 
     <!-- Fonts -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.4.0/css/font-awesome.min.css" rel='stylesheet' type='text/css'>
