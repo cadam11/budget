@@ -1,5 +1,5 @@
 @extends('layouts.app')
-
+@section('pagetitle', 'Import')
 @section('srcstyle')
 <link rel="stylesheet" href="{{ elixir('css/dropzone.css') }}">
 @endsection
