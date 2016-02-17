@@ -1,5 +1,5 @@
 @extends('layouts.app')
-
+@section('pagetitle', 'Create Transaction')
 @section('content')
 <div class="container">
     <div class="row">
