@@ -101,6 +101,7 @@
                             <th>Total Budgeted</th>
                             <th>{{money_format("$%n", $budgets['Income']->sum('amount'))}}</th>
                             <th></th>
+                            <th></th>
                         </tfoot>
                     </table>
                     <hr/>
@@ -167,6 +168,7 @@
                         <tfoot>
                             <th>Total Budgeted</th>
                             <th>{{money_format("$%n", $budgets['Expense']->sum('amount'))}}</th>
+                            <th></th>
                             <th></th>
                         </tfoot>
                     </table>
