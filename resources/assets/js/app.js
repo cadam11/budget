@@ -14,7 +14,7 @@ $.fn.editable.defaults.params = function (params) {
     return params;
 };
 
-$('a').click(function() {
+$('a:not(.dropdown-toggle)').click(function() {
 	window.location=$(this).attr('href');
 	return false;
 });
