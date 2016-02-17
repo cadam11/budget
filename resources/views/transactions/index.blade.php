@@ -73,6 +73,9 @@
 
                                         {{ $t->category or "" }}
                                     </a>
+                                    @if (!in_array($t->category, $budgets))
+                                    <div class="hidden">Unbudgeted</div>
+                                    @endif
                                 </td>
                                 <td>{{ $t->account }}</td>
                                 <td>{{ money_format("$%n", $t->amount) }}</td>
@@ -93,6 +96,23 @@
                             </tr>
                             @endforeach
                         </tbody>
+                        <tfoot>
+                            <tr>
+                                <th colspan="3">Debits</th>
+                                <th id="total-debits"></th>
+                                <th colspan="2"></th>
+                            </tr>
+                            <tr>
+                                <th colspan="3">Credits</th>
+                                <th id="total-credits"></th>
+                                <th colspan="2"></th>
+                            </tr>
+                            <tr>
+                                <th colspan="4">Net</th>
+                                <th id="total-net"></th>
+                                <th></th>
+                            </tr>
+                        </tfoot>
                     </table>
 
 
@@ -131,7 +151,67 @@ $('.editable-category').editable({
 
 });
 
-var table = $('table').DataTable();
+
+var table = $('table').DataTable({
+
+        "search": {
+            "search": "{{ $search }}"
+        },
+
+        "footerCallback": function ( row, data, start, end, display ) {
+            var api = this.api(), data;
+ 
+            // Remove the formatting to get numeric data for summation
+
+            var format = function(n){
+                return '$' + n.toFixed(2).replace(/./g, function(c, i, a) {
+                    return i && c !== "." && ((a.length - i) % 3 === 0) ? ',' + c : c;
+                });
+            }
+
+            var credit = function(i){
+                var amt = typeof i === 'string' ?
+                    i.replace(/[\$,]/g, '')*-1 :
+                    typeof i === 'number' ?
+                        i : 0;
+                return amt < 0 ? 0 : amt;
+            }
+ 
+            var debit = function(i){
+                var amt = typeof i === 'string' ?
+                    i.replace(/[\$,]/g, '')*1 :
+                    typeof i === 'number' ?
+                        i : 0;
+                return amt < 0 ? 0 : amt;
+            }
+ 
+
+            // Total over all pages
+            credits = api
+                .column(4, {'filter': 'applied'})
+                .data()
+                .reduce( function (a, b) {
+                    return credit(a) + credit(b);
+                }, 0 );
+ 
+            // Total over this page
+            debits = api
+                .column(4, {'filter': 'applied'})
+                .data()
+                .reduce( function (a, b) {
+                    return debit(a) + debit(b);
+                }, 0 );
+ 
+            // Update footer
+            if (credits == 0) $("#total-credits").parent("tr").remove();
+            else $("#total-credits").html(format(credits));
+            
+            if (debits == 0) $("#total-debits").parent("tr").remove();
+            else $("#total-debits").html(format(debits));
+            
+            $("#total-net").html(format(debits-credits));
+        }
+    });
 
 $('[data-toggle="confirmation"]').confirmation({
     onConfirm: function() {

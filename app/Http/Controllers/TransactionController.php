@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use DB;
 use Carbon\Carbon;
 use Budget\Transaction;
+use Budget\Budget;
 use Budget\Http\Requests;
 use Budget\Http\Controllers\Controller;
 use Budget\Exceptions\JsonException;
@@ -32,11 +33,17 @@ class TransactionController extends Controller
      * 
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
         return view('transactions.index', [
-                'transactions'=>Transaction::month($this->month)->get(),
+                'transactions'=>Transaction::month($this->month)->orderBy('date', 'desc')->get(),
                 'basedate' => $this->month,
+                'search' => $request->get('search'),
+                'budgets' => Budget::month($this->month)
+                    ->select('category')
+                    ->get()
+                    ->pluck('category')
+                    ->all(),
             ]);
     }
 
@@ -63,7 +70,7 @@ class TransactionController extends Controller
 
     	$request->session()->flash('alert-success', 'New transaction saved.');
 
-    	return $this->index();
+    	return $this->index($request);
     }
 
 
