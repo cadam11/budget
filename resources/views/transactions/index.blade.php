@@ -46,7 +46,7 @@
 
                     <table class="table responsive" 
                         data-paging="false" 
-                        data-order='[[ 0, "asc" ]]' >
+                        data-order='[[ 0, "desc" ]]' >
                         <thead>
                             <tr>
                                 <th class="col-xs-1 col-sm-2" data-priority="1">Date</th>
