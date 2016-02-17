@@ -16,6 +16,10 @@
                         <li>Manage notifications for approaching/over budget</li>
                         <li><del>Handle income categories as well</del></li>
                         <li><del>Deal with duplicate incoming transactions</del></li>
+                        <li>Control user access by command line</li>
+                        <li>Auditing of user actions</li>
+                        <li>API key authentication</li>
+                        <li>User administration &amp; roles</li>
                     </ul>
 
                 </div>
