@@ -203,11 +203,11 @@ var table = $('table').DataTable({
                 }, 0 );
  
             // Update footer
-            if (credits == 0) $("#total-credits").parent("tr").remove();
-            else $("#total-credits").html(format(credits));
+            if (credits == 0) $("#total-credits").parent("tr").hide();
+            else $("#total-credits").html(format(credits)).parent("tr").show();
             
-            if (debits == 0) $("#total-debits").parent("tr").remove();
-            else $("#total-debits").html(format(debits));
+            if (debits == 0) $("#total-debits").parent("tr").hide();
+            else $("#total-debits").html(format(debits)).parent("tr").show();
             
             $("#total-net").html(format(debits-credits));
         }
