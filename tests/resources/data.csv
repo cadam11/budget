@@ -1,0 +1,10 @@
+"transaction_date","account_type","description_1","cad"
+"2016-02-18","MasterCard","Test item 1",12.33
+"2016-02-18","MasterCard","Test item 2",2.33
+"2016-02-19","MasterCard","Test item 3",404.00
+"2016-02-19","MasterCard","Test item 4",19.95
+"2016-02-18","Chequing","Test item 5",16.82
+"2016-02-19","MasterCard","Test item 6",0.02
+"2016-02-20","MasterCard","Test item 7",100.00
+"2016-02-20","MasterCard","Test item 8",66.33
+"2016-02-21","MasterCard","Test item 9",6.07
