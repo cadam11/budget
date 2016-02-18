@@ -28,7 +28,7 @@
                         </div>
                     </form>
 
-                    <pre id="response" class="text-danger hidden">
+                    <pre id="response" class="text-danger" style="display: none">
                     </pre>
 
                 </div>
@@ -45,11 +45,10 @@
 @section('script')
 Dropzone.options.myAwesomeDropzone = {
     success: function(file, done) {
-        $("#response").show().html("It worked!");
         location.href="/transactions/import/parse";
     },
     error: function(file, response) {
-        $("#response").html(response);
+        $("#response").show().html("ERROR: " + response.message);
     }
 }
 @endsection

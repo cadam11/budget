@@ -50,7 +50,7 @@
                         <thead>
                             <tr>
                                 <th class="col-xs-1 col-sm-2" data-priority="1">Date</th>
-                                <th class="col-xs-6 col-sm-4">Description</th>
+                                <th class="col-xs-6 col-sm-4" data-priority="3">Description</th>
                                 <th class="col-xs-2 col-sm-2">Category</th>
                                 <th class="col-xs-2 col-sm-2">Account</th>
                                 <th class="col-xs-1 col-sm-1" data-priority="2">Amount</th>
@@ -73,7 +73,7 @@
 
                                         {{ $t->category or "" }}
                                     </a>
-                                    @if (!in_array($t->category, $budgets))
+                                    @if (isset($budgets) && !in_array($t->category, $budgets))
                                     <div class="hidden">Unbudgeted</div>
                                     @endif
                                 </td>
@@ -98,20 +98,17 @@
                         </tbody>
                         <tfoot>
                             <tr>
-                                <th colspan="3">Debits</th>
-                                <th id="total-debits"></th>
-                                <th colspan="2"></th>
-                            </tr>
-                            <tr>
-                                <th colspan="3">Credits</th>
-                                <th id="total-credits"></th>
-                                <th colspan="2"></th>
-                            </tr>
-                            <tr>
-                                <th colspan="4">Net</th>
+                                <th>Total</th>
+                                <th>
+                                    <span id="total-credits"></span> 
+                                    <span id="total-debits"></span>
+                                </th>
+                                <th></th>
+                                <th></th>
                                 <th id="total-net"></th>
                                 <th></th>
                             </tr>
+
                         </tfoot>
                     </table>
 
@@ -155,7 +152,7 @@ $('.editable-category').editable({
 var table = $('table').DataTable({
 
         "search": {
-            "search": "{{ $search }}"
+            "search": "{{ $search or '' }}"
         },
 
         "footerCallback": function ( row, data, start, end, display ) {
@@ -164,9 +161,11 @@ var table = $('table').DataTable({
             // Remove the formatting to get numeric data for summation
 
             var format = function(n){
-                return '$' + n.toFixed(2).replace(/./g, function(c, i, a) {
+                var abs = Math.abs(n);
+                var s = abs.toFixed(2).replace(/./g, function(c, i, a) {
                     return i && c !== "." && ((a.length - i) % 3 === 0) ? ',' + c : c;
                 });
+                return '$' + (n < 0 ? '-':'') + s;
             }
 
             var credit = function(i){
@@ -204,10 +203,10 @@ var table = $('table').DataTable({
  
             // Update footer
             if (credits == 0) $("#total-credits").parent("tr").hide();
-            else $("#total-credits").html(format(credits)).parent("tr").show();
+            else $("#total-credits").html(format(credits) + " CR").parent("tr").show();
             
             if (debits == 0) $("#total-debits").parent("tr").hide();
-            else $("#total-debits").html(format(debits)).parent("tr").show();
+            else $("#total-debits").html(format(debits) + " DR").parent("tr").show();
             
             $("#total-net").html(format(debits-credits));
         }
