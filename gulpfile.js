@@ -57,7 +57,9 @@ elixir(function(mix) {
             '../bower/dropzone/dist/min/dropzone.min.js'
             ], 'public/js/dropzone.js')
 
-        .scripts('app.js')
+        .scripts([
+            '../js/*'
+            ], 'app.js')
 
         .version([
         	'css/app.css',
