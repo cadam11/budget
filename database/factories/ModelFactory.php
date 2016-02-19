@@ -19,3 +19,17 @@ $factory->define(Budget\User::class, function (Faker\Generator $faker) {
         'remember_token' => str_random(10),
     ];
 });
+
+$factory->define(Budget\Transaction::class, function (Faker\Generator $faker) {
+	$desc = $faker->catchPhrase();
+    return [
+        'account' => $faker->optional($weight = 0.2)->randomDigit == null ? 'MasterCard' : 'Chequing',
+        'date' => $faker->dateTimeThisMonth()->format('Y-m-d'),
+        'description' => ucwords(strtolower($desc)),
+        'amount' => $faker->numberBetween(100, 20000)/100,
+        'category' => ucwords($faker->word()),
+        'imported_description1' => strtoupper($desc),
+    ];
+});
+
+
