@@ -8,8 +8,7 @@
  *
  * 
  */
-
-$('a:not(.dropdown-toggle):not([href="#"]').click(function() {
+$("a:not([href='#'])").click(function() {
 	window.location=$(this).attr('href');
 	return false;
 });
