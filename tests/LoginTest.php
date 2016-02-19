@@ -9,33 +9,19 @@ use Illuminate\Foundation\Testing\DatabaseTransactions;
  */
 class LoginTest extends TestCase
 {
-    /**
-     * Basic login
-     *
-     * @return void
-     */
-    public function it_logs_in_properly()
+    public function test_it_logs_in_properly()
     {
-    	// set up
-    	// 
-    	// a valid user in the database
     	$password = "bamboo";
 		$user = factory(Budget\User::class)->create();
 		$user->password = bcrypt($password);
 		$user->save();
 
-    	// execute
-    	// 
-    	// visit the login page
-        // enter credentials
         $this->visit('/login')
         	->type($user->email, "email")
         	->type($password, "password")
-        	->press('Login')
+        	->press('Login');
 
-    	// test assertions
-    	// 
-    	// the http response was as expected
+    	$this
 	    	->seePageIs('/')
 	    	->see($user->name);    	
     }
