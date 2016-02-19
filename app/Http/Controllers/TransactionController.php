@@ -64,7 +64,8 @@ class TransactionController extends Controller
      */
     public function store(Request $request)
     {
-    	$fields = ['account', 'date', 'amount', 'description', 'category'];
+        $request->request->add(['imported_description1' => '']);
+    	$fields = ['account', 'date', 'amount', 'description', 'category','imported_description1'];
     	$t = Transaction::create(array_only($request->all(), $fields));
     	$t->save();
 

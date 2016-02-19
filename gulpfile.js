@@ -72,4 +72,6 @@ elixir(function(mix) {
         	])
     ;
 
+    mix.phpUnit();
+
 });
