@@ -1,6 +1,6 @@
 # Budget
 
-[![Build Status](https://travis-ci.org/laravel/framework.svg)](https://travis-ci.org/laravel/framework)
+[![Build Status](https://travis-ci.org/cadam11/budget.svg?branch=master)](https://travis-ci.org/cadam11/budget)
 
 Budget is a web application based on the [Laravel framework](http://laravel.com/) for personal financial management. The concept is based on [Mint](http://mint.com) but is self-hosted, rather than delivered as a service. This allows you to remain in control of your own data.
 
