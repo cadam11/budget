@@ -13,7 +13,7 @@
 
                 <div class="panel-body">
 
-                    <form action="/transactions/import" class="dropzone" id="my-awesome-dropzone" method="post" style="border: 2px dashed #999">
+                    <form action="transactions::saveImport" class="dropzone" id="my-awesome-dropzone" method="post" style="border: 2px dashed #999">
                         {!! csrf_field() !!}
                         <div class="fallback">
                             <input name="file" type="file" />
@@ -45,7 +45,7 @@
 @section('script')
 Dropzone.options.myAwesomeDropzone = {
     success: function(file, done) {
-        location.href="/transactions/import/parse";
+        location.href="{{ route('transactions::parseImport') }}";
     },
     error: function(file, response) {
         $("#response").show().html("ERROR: " + response.message);

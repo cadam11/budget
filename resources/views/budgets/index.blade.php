@@ -10,7 +10,7 @@
                 <div class="panel-heading">
                     <div class="input-group">
                         <span class="input-group-btn">
-                            <a class="btn btn-default" href="/budgets?basedate={{ (new Carbon\Carbon($basedate))->subMonth() }}"><i class="fa fa-chevron-left"></i></a>
+                            <a class="btn btn-default" href="{{ route('budgets::index', ['basedate' => (new Carbon\Carbon($basedate->startOfMonth()))->subMonth()->toDateTimeString()]) }}"><i class="fa fa-chevron-left"></i></a>
                         </span>
                         <select name="basedate" class="selectpicker form-control" onchange="this.form.submit()">
                             @for ($i = -3; $i <= 3; $i++)
@@ -22,7 +22,7 @@
                             @endfor
                         </select>
                         <span class="input-group-btn">
-                            <a class="btn btn-default"  href="/budgets?basedate={{ (new Carbon\Carbon($basedate))->addMonth() }}"><i class="fa fa-chevron-right"></i></a>
+                            <a class="btn btn-default"  href="{{ route('transactions::index', ['basedate' => (new Carbon\Carbon($basedate->startOfMonth()))->addMonth()->toDateTimeString()]) }}"><i class="fa fa-chevron-right"></i></a>
                         </span>
                     </div>
                     <div class="btn-group pull-right">
@@ -83,14 +83,13 @@
                                 <td class="text-right">
                                     <a 
                                         href="#" 
-                                        id="delete"
                                         data-toggle="confirmation"
                                         data-popout="true"
                                         data-singleton="true"
                                         data-btn-ok-icon="fa fa-check"
                                         data-btn-cancel-icon="fa fa-times" 
                                         data-pk="{{ $b->id }}"
-                                        class="text-muted">
+                                        class="text-muted delete">
                                         <i class="fa fa-times"></i>
                                     </a>
                                 </td>
@@ -267,19 +266,6 @@ var table = $('table.grouped-by-variable').DataTable({
 } );
 
 
-$('[data-toggle="confirmation"]').confirmation({
-    onConfirm: function() {
-        var row = $(this).parents('tr');
-       $.get('/budgets/' + $(this).data('pk') + '/delete')
-        .done(function(response){
-            console.log("Row deleted");
-            console.log($(row));
-            $(row).remove();
-        })
-        .fail(function(response){ 
-            console.error(response);
-        });
-    }
-});
+
 
 @endsection

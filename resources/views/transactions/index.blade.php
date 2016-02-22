@@ -11,7 +11,7 @@
                     @elseif (isset($basedate))
                     <div class="input-group">
                         <span class="input-group-btn">
-                            <a class="btn btn-default" href="/transactions?basedate={{ (new Carbon\Carbon($basedate->startOfMonth()))->subMonth() }}"><i class="fa fa-chevron-left"></i></a>
+                            <a class="btn btn-default" href="{{ route('transactions::index', ['basedate' => (new Carbon\Carbon($basedate->startOfMonth()))->subMonth()->toDateTimeString()]) }}"><i class="fa fa-chevron-left"></i></a>
                         </span>                    
                         <select name="basedate" class="selectpicker form-control" onchange="this.form.submit()">
                             @for ($i = -3; $i <= 3; $i++)
@@ -23,19 +23,19 @@
                             @endfor
                         </select>
                         <span class="input-group-btn">
-                            <a class="btn btn-default"  href="/transactions?basedate={{ (new Carbon\Carbon($basedate->startOfMonth()))->addMonth() }}"><i class="fa fa-chevron-right"></i></a>
+                            <a class="btn btn-default"  href="{{ route('transactions::index', ['basedate' => (new Carbon\Carbon($basedate->startOfMonth()))->addMonth()->toDateTimeString()]) }}"><i class="fa fa-chevron-right"></i></a>
                         </span>
                     </div>
                     @else
                     This month
                     @endif
                     <div class="btn-group pull-right">
-                        <a class="btn btn-xs btn-default" href="/transactions/create"><i class="fa fa-plus"></i> New Transaction</a>
+                        <a class="btn btn-xs btn-default" href="{{ route('transactions::create') }}"><i class="fa fa-plus"></i> New Transaction</a>
                         <button type="button" class="btn btn-xs btn-default dropdown-toggle" data-toggle="dropdown">
                             <span class="caret"></span>
                         </button>
                         <ul class="dropdown-menu">
-                            <li><a href="/transactions/import"><i class="fa fa-cloud-upload"></i> Import transactions</a></li>
+                            <li><a href="{{ route('transactions::import') }}"><i class="fa fa-cloud-upload"></i> Import transactions</a></li>
                         </ul>
                     </div>
 
@@ -68,7 +68,7 @@
                                         id="category" 
                                         data-type="text"
                                         data-pk="{{ $t->id }}"
-                                        data-url="/transactions/{{ $t->id }}"
+                                        data-url="{{ route('transactions::update', ['id'=>$t->id]) }}"
                                         data-title="Enter category">
 
                                         {{ $t->category or "" }}
@@ -82,14 +82,13 @@
                                 <td class="text-right">
                                     <a 
                                         href="#" 
-                                        id="delete"
                                         data-toggle="confirmation"
                                         data-popout="true"
                                         data-singleton="true"
                                         data-btn-ok-icon="fa fa-check"
                                         data-btn-cancel-icon="fa fa-times" 
-                                        data-pk="{{ $t->id }}"
-                                        class="text-muted">
+                                        data-target="{{ route('transactions::delete', [$t->id]) }}"
+                                        class="text-muted delete">
                                         <i class="fa fa-times"></i>
                                     </a>
                                 </td>
@@ -126,7 +125,7 @@ var categories = new Bloodhound({
     queryTokenizer: Bloodhound.tokenizers.whitespace,
     prefetch: {
         cache: false,
-        url: '{!! url('/categories') !!}'
+        url: '{!! route('categories') !!}'
     }
 });
 
@@ -211,21 +210,6 @@ var table = $('table').DataTable({
             $("#total-net").html(format(debits-credits));
         }
     });
-
-$('[data-toggle="confirmation"]').confirmation({
-    onConfirm: function() {
-        var row = $(this).parents('tr');
-       $.get('/transactions/' + $(this).data('pk') + '/delete')
-        .done(function(response){
-            console.log("Row deleted");
-            console.log($(row));
-            table.row(row).remove().draw();
-        })
-        .fail(function(response){ 
-            console.error(response);
-        });
-    }
-});
 
 
 
