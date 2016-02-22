@@ -61,6 +61,7 @@
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i class="fa fa-cog"></i> Settings <i class="fa fa-caret-down"></i></a>
                         <ul class="dropdown-menu" role="menu">
                             <li><a href="{{ url('/settings/todo') }}"><i class="fa fa-check-square-o"></i> To Do</a></li>
+                            <li><a href="{{ url('/settings/info') }}"><i class="fa fa-info"></i> Info</a></li>
                             <li><a href="{{ url('/settings/rules') }}"><i class="fa fa-list"></i> Category Rules</a></li>
                         </ul>
                     </li>
