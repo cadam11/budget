@@ -7,7 +7,7 @@
         <div class="col-md-10 col-md-offset-1">
             <div class="panel panel-default">
                 <div class="panel-heading">Category Rules
-                    <a class="btn btn-xs btn-default pull-right" href="/settings/rules/create"><i class="fa fa-plus"></i> New Rule</a>
+                    <a class="btn btn-xs btn-default pull-right" href="{{ route('admin::rules::create') }}"><i class="fa fa-plus"></i> New Rule</a>
                 </div>
 
                 <div class="panel-body">
@@ -30,7 +30,7 @@
                                         id="category" 
                                         data-type="text"
                                         data-pk="{{ $r->id }}"
-                                        data-url="/settings/rules/{{ $r->id }}">
+                                        data-url="{{ route('admin::rules::update', [$r->id]) }}">
 
                                         {{ $r->category or '' }}
                                     </a>
@@ -41,7 +41,7 @@
                                         id="pattern" 
                                         data-type="text"
                                         data-pk="{{ $r->id }}"
-                                        data-url="/settings/rules/{{ $r->id }}">
+                                        data-url="{{ route('admin::rules::update', [$r->id]) }}">
 
                                         {{ $r->pattern or '' }}
 
@@ -52,7 +52,7 @@
                                         id="amount" 
                                         data-type="text"
                                         data-pk="{{ $r->id }}"
-                                        data-url="/settings/rules/{{ $r->id }}"
+                                        data-url="{{ route('admin::rules::update', [$r->id]) }}"
                                         data-value= "{{$r->amount}}">
 
                                         {{ $r->amount == null ? '' :  money_format("$%n", $r->amount) }}
@@ -61,14 +61,13 @@
                                 <td class="text-right">
                                     <a 
                                         href="#" 
-                                        id="delete"
                                         data-toggle="confirmation"
                                         data-popout="true"
                                         data-singleton="true"
                                         data-btn-ok-icon="fa fa-check"
                                         data-btn-cancel-icon="fa fa-times" 
-                                        data-pk="{{ $r->id }}"
-                                        class="text-muted">
+                                        data-target="{{ route('admin::rules::delete', [$r->id]) }}"
+                                        class="text-muted delete">
                                         <i class="fa fa-times"></i>
                                     </a>
                                 </td>
@@ -91,21 +90,6 @@ $('.editable').editable({
     clear: true,
     success: function(response, newValue) {
         if(response.status == 'error') return response.message;
-    }
-});
-
-$('[data-toggle="confirmation"]').confirmation({
-    onConfirm: function() {
-        var row = $(this).parents('tr');
-       $.get('/settings/rules/' + $(this).data('pk') + '/delete')
-        .done(function(response){
-            console.log("Row deleted");
-            console.log($(row));
-            $(row).remove();
-        })
-        .fail(function(response){ 
-            console.error(response);
-        });
     }
 });
 

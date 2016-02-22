@@ -58,8 +58,8 @@ elixir(function(mix) {
             ], 'public/js/dropzone.js')
 
         .scripts([
-            '../js/*'
-            ], 'app.js')
+            '../js/*.js'
+            ], 'public/js/app.js')
 
         .version([
         	'css/app.css',
