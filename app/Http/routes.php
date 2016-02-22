@@ -35,6 +35,8 @@ Route::group(['middleware' => 'web'], function () {
     Route::get('/', 'HomeController@index');
 
     Route::get('/settings/todo', 'HomeController@todo');
+    Route::get('/settings/info', 'HomeController@info');
+
 
     Route::get('/transactions', 'TransactionController@index');
     Route::get('/transactions/create', 'TransactionController@create');
