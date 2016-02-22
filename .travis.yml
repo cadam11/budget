@@ -8,13 +8,11 @@ before_script:
 - php artisan key:generate
 script:
 - vendor/bin/phpunit
-after_script:
-- ssh -o "StrictHostKeyChecking no" -o PasswordAuthentication=no adam11.ca
 after_success:
 - eval "$(ssh-agent -s)"
 - chmod 600 .travis/deploy_key.pem
 - ssh-add .travis/deploy_key.pem
-- ssh-keyscan adam11.ca >> ~/ssh/
+- ssh-keyscan -H adam11.ca >> ~/.ssh/known_hosts
 - git remote add deploy ssh://adamca@adam11.ca:/home/adamca/repo/budget.git
 - git push deploy
 before_install:
