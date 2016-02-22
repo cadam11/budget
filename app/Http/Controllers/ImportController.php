@@ -31,7 +31,6 @@ class ImportController extends Controller
      */
     public function __construct(ImportService $import)
     {
-        $this->middleware('auth');
         $this->import = $import;
     }
 

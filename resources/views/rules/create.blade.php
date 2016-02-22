@@ -9,7 +9,7 @@
 
                 <div class="panel-body">
 
-                    <form class="form" action="/settings/rules" method="post">
+                    <form class="form" action="{{ route('admin::rules::save') }}" method="post">
                         {!! csrf_field() !!}
 
                         <div class="form-group">
@@ -27,7 +27,9 @@
                             <input type="text" class="form-control" id="amount" name="amount" placeholder="Amount">
                         </div>
 
-                        <input type="submit" value="Save" class="btn btn-primary">
+                        <div class="col-sm-12 text-right">
+                            <button type="submit" class="btn btn-primary">Save</button>
+                        </div>
                    </form>
 
                 </div>

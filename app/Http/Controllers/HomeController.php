@@ -10,16 +10,6 @@ use Illuminate\Http\Request;
 class HomeController extends Controller
 {
     /**
-     * Create a new controller instance.
-     *
-     * @return void
-     */
-    public function __construct()
-    {
-        $this->middleware('auth');
-    }
-
-    /**
      * Show the application dashboard.
      *
      * @return \Illuminate\Http\Response
@@ -34,30 +24,6 @@ class HomeController extends Controller
             ]);
     }
 
-
-    /**
-     * A view to keep track of work to be done
-     * 
-     * @return \Illuminate\Http\Response
-     */
-    public function todo()
-    {
-        return view('todo');
-    }
-
-
-
-    /**
-     * A view on current system info/status
-     * 
-     * @return \Illuminate\Http\Response
-     */
-    public function info()
-    {
-        return view('info',[
-                'git' => shell_exec("git log -1 --pretty=format:'%h - %s (%ci)' --abbrev-commit"),
-            ]);
-    }
 
 
 

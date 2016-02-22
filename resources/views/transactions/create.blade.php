@@ -9,7 +9,7 @@
 
                 <div class="panel-body">
 
-                    <form class="form" action="/transactions" method="post">
+                    <form class="form" action="{{route('transactions::save')}}" method="post">
                         {!! csrf_field() !!}
 
                         <div class="form-group">
@@ -25,20 +25,19 @@
                             <input type="text" class="form-control" id="description" name="description" placeholder="Description">
                         </div>
 
-<div class="form-group">
-    <label for="category">Category</label>
-    <input name="category" id="category" class="typeahead form-control" type="text" placeholder="Category">
-</div>
-                      {{--   <div class="form-group">
+                        <div class="form-group">
                             <label for="category">Category</label>
-                            <input type="text" class="form-control typeahead" id="category" name="category" placeholder="Category">
-                        </div> --}}
+                            <input name="category" id="category" class="typeahead form-control" type="text" placeholder="Category">
+                        </div>
+
                         <div class="form-group">
                             <label for="amount">Amount</label>
                             <input type="text" class="form-control" id="amount" name="amount" placeholder="Amount">
                         </div>
 
-                        <input type="submit" value="Save" class="btn btn-primary">
+                        <div class="col-sm-12 text-right">
+                            <button type="submit" class="btn btn-primary">Save</button>
+                        </div>
                    </form>
 
                 </div>
@@ -55,7 +54,7 @@ var categories = new Bloodhound({
     queryTokenizer: Bloodhound.tokenizers.whitespace,
     prefetch: {
         cache: false,
-        url: '{!! url('/categories') !!}'
+        url: '{!! route('categories') !!}'
     }
 });
 
