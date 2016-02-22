@@ -15,7 +15,7 @@
 
                 <div class="panel-body">
 
-                    <form class="form" action="/budgets" method="post">
+                    <form class="form" action="{{ route('budgets::save') }}" method="post">
                         {!! csrf_field() !!}
                         @if ($basedate)
                         <input type="hidden" name="basedate" value="{{$basedate->startOfMonth()->toDateTimeString()}}">
@@ -45,7 +45,9 @@
                                 <option value="Ignored">Ignored</option>
                             </select>
                         </div>
-                        <input type="submit" value="Save" class="btn btn-primary">
+                        <div class="col-sm-12 text-right">
+                            <button type="submit" class="btn btn-primary">Save</button>
+                        </div>
                    </form>
 
                 </div>
@@ -62,7 +64,7 @@ var categories = new Bloodhound({
     queryTokenizer: Bloodhound.tokenizers.whitespace,
     prefetch: {
         cache: false,
-        url: '{!! url('/categories') !!}'
+        url: '{!! route('categories') !!}'
     }});
 
 
