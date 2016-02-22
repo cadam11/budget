@@ -46,5 +46,21 @@ class HomeController extends Controller
     }
 
 
+
+    /**
+     * A view on current system info/status
+     * 
+     * @return \Illuminate\Http\Response
+     */
+    public function info()
+    {
+        return view('info',[
+                'git' => shell_exec("git log -1 --pretty=format:'%h - %s (%ci)' --abbrev-commit"),
+            ]);
+    }
+
+
+
+
     
 }
