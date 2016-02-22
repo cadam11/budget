@@ -1,0 +1,20 @@
+language: php
+php:
+- 5.6
+before_script:
+- cp .env.travis .env
+- composer self-update
+- composer install --no-interaction
+- php artisan key:generate
+script:
+- vendor/bin/phpunit
+after_success:
+- eval "$(ssh-agent -s)"
+- chmod 600 .travis/deploy_key.pem
+- ssh-add .travis/deploy_key.pem
+- ssh-keyscan -H adam11.ca >> ~/.ssh/known_hosts
+- git remote add deploy ssh://adamca@adam11.ca:/home/adamca/repo/budget.git
+- git push deploy
+before_install:
+- openssl aes-256-cbc -K $encrypted_e714f8138009_key -iv $encrypted_e714f8138009_iv
+  -in .travis/deploy_key.pem.enc -out .travis/deploy_key.pem -d
