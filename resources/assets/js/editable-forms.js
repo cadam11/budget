@@ -21,3 +21,4 @@ $.fn.editable.defaults.params = function (params) {
     return params;
 };
 
+$('.editable').editable();
