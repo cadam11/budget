@@ -26,8 +26,10 @@
                             <tr>
                                 <td>
                                     <a href="#" 
-                                        class="editable"
                                         id="category" 
+                                        class="editable"
+                                        data-mode="inline"
+                                        data-clear="true"
                                         data-type="text"
                                         data-pk="{{ $r->id }}"
                                         data-url="{{ route('admin::rules::update', [$r->id]) }}">
@@ -37,8 +39,10 @@
                                 </td>
                                 <td>
                                     <a href="#"
-                                        class="editable"
                                         id="pattern" 
+                                        class="editable"
+                                        data-mode="inline"
+                                        data-clear="true"
                                         data-type="text"
                                         data-pk="{{ $r->id }}"
                                         data-url="{{ route('admin::rules::update', [$r->id]) }}">
@@ -48,8 +52,10 @@
                                 </td>
                                 <td>
                                     <a href="#" 
-                                        class="editable"
                                         id="amount" 
+                                        class="editable"
+                                        data-mode="inline"
+                                        data-clear="true"
                                         data-type="text"
                                         data-pk="{{ $r->id }}"
                                         data-url="{{ route('admin::rules::update', [$r->id]) }}"
@@ -84,15 +90,4 @@
         </div>
     </div>
 </div>
-@endsection
-@section('script')
-
-$('.editable').editable({
-    mode: 'inline',
-    clear: true,
-    success: function(response, newValue) {
-        if(response.status == 'error') return response.message;
-    }
-});
-
 @endsection
