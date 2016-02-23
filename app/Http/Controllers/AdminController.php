@@ -42,7 +42,7 @@ class AdminController extends Controller
     	}
 
         return view('admin.info',[
-                'git' => shell_exec("git log -1 --pretty=format:'%h - %s (%ci)' --abbrev-commit"),
+                'git' => shell_exec("git log -1 --pretty=format:'%h - %s (%ci)' --abbrev-commit --no-merges"),
                 'changes' => $c,
             ]);
     }
