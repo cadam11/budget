@@ -10,7 +10,7 @@
                 <div class="panel-heading">
                     <div class="input-group">
                         <span class="input-group-btn">
-                            <a class="btn btn-default" href="{{ route('budgets::index', ['basedate' => (new Carbon\Carbon($basedate->startOfMonth()))->subMonth()->toDateTimeString()]) }}"><i class="fa fa-chevron-left"></i></a>
+                            <a class="btn btn-default" href="{{ route('budgets::index', ['basedate' => (new Carbon\Carbon($basedate->startOfMonth()))->subMonth()->toDateTimeString()]) }}"><i class="fa fa-chevron-left"></i><span class="sr-only">Previous Month</span></a>
                         </span>
                         <select name="basedate" class="selectpicker form-control" onchange="this.form.submit()">
                             @for ($i = -3; $i <= 3; $i++)
@@ -22,7 +22,7 @@
                             @endfor
                         </select>
                         <span class="input-group-btn">
-                            <a class="btn btn-default"  href="{{ route('transactions::index', ['basedate' => (new Carbon\Carbon($basedate->startOfMonth()))->addMonth()->toDateTimeString()]) }}"><i class="fa fa-chevron-right"></i></a>
+                            <a class="btn btn-default"  href="{{ route('transactions::index', ['basedate' => (new Carbon\Carbon($basedate->startOfMonth()))->addMonth()->toDateTimeString()]) }}"><i class="fa fa-chevron-right"></i><span class="sr-only">Next Month</span></a>
                         </span>
                     </div>
                     <div class="btn-group pull-right">

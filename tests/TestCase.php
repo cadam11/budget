@@ -9,6 +9,9 @@ class TestCase extends Illuminate\Foundation\Testing\TestCase
      */
     protected $baseUrl = 'http://budget.app';
 
+    protected $validUser;
+
+
     /**
      * Creates the application.
      *
@@ -29,6 +32,8 @@ class TestCase extends Illuminate\Foundation\Testing\TestCase
     {
         parent::setUp();
         Artisan::call('migrate');
+        $this->validUser = factory(Budget\User::class)->create();
+
     }
 
     public function tearDown()
