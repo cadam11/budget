@@ -2,11 +2,10 @@
 
 namespace Budget\Http\Controllers;
 
-use DB;
-use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Budget\Http\Requests;
 use Budget\Http\Controllers\Controller;
+use Budget\Services\CategoryService;
 
 class CategoryController extends Controller
 {
@@ -16,18 +15,10 @@ class CategoryController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(CategoryService $categories)
     {
-
-        $budgetCategories = DB::table('budgets')->select('category')->distinct();
-        $categories = collect(DB::table("transactions")
-            ->select('category')
-            ->distinct()
-            ->union($budgetCategories)
-            ->get())->keyBy('category');
-
         
-        return response()->json($categories->keys());
+        return response()->json($categories->getAll()->keys());
     }
 
 
