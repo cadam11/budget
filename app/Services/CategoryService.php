@@ -2,6 +2,7 @@
 
 namespace Budget\Services;
 
+use DB;
 use Budget\Rule;
 
 class CategoryService {
@@ -16,6 +17,21 @@ class CategoryService {
     public function __construct()
     {
         $this->rules = Rule::all();
+    }
+
+    /**
+     * Gets a list of all categories
+     * 
+     * @return Array
+     */
+    public function getAll(){
+
+        return collect(DB::table("transactions")
+            ->select('category')
+            ->distinct()
+            ->union(DB::table('budgets')->select('category')->distinct())
+            ->get())->keyBy('category');
+
     }
 
 	/**

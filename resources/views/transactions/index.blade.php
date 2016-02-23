@@ -11,7 +11,7 @@
                     @elseif (isset($basedate))
                     <div class="input-group">
                         <span class="input-group-btn">
-                            <a class="btn btn-default" href="{{ route('transactions::index', ['basedate' => (new Carbon\Carbon($basedate->startOfMonth()))->subMonth()->toDateTimeString()]) }}"><i class="fa fa-chevron-left"></i></a>
+                            <a class="btn btn-default" href="{{ route('transactions::index', ['basedate' => (new Carbon\Carbon($basedate->startOfMonth()))->subMonth()->toDateTimeString()]) }}"><i class="fa fa-chevron-left"></i><span class="sr-only">Previous Month</span></a>
                         </span>                    
                         <select name="basedate" class="selectpicker form-control" onchange="this.form.submit()">
                             @for ($i = -3; $i <= 3; $i++)
@@ -23,7 +23,7 @@
                             @endfor
                         </select>
                         <span class="input-group-btn">
-                            <a class="btn btn-default"  href="{{ route('transactions::index', ['basedate' => (new Carbon\Carbon($basedate->startOfMonth()))->addMonth()->toDateTimeString()]) }}"><i class="fa fa-chevron-right"></i></a>
+                            <a class="btn btn-default"  href="{{ route('transactions::index', ['basedate' => (new Carbon\Carbon($basedate->startOfMonth()))->addMonth()->toDateTimeString()]) }}"><i class="fa fa-chevron-right"></i><span class="sr-only">Next Month</span></a>
                         </span>
                     </div>
                     @else
@@ -66,7 +66,7 @@
                                     <a href="#" 
                                         class="editable-category"
                                         id="category" 
-                                        data-type="text"
+                                        data-type="typeaheadjs"
                                         data-pk="{{ $t->id }}"
                                         data-url="{{ route('transactions::update', ['id'=>$t->id]) }}"
                                         data-title="Enter category">
@@ -82,6 +82,8 @@
                                 <td class="text-right">
                                     <a 
                                         href="#" 
+                                        onclick="return false"
+                                        data-copy-attributes="onclick"
                                         data-toggle="confirmation"
                                         data-popout="true"
                                         data-singleton="true"
@@ -120,26 +122,12 @@
 @endsection
 @section('script')
 
-var categories = new Bloodhound({
-    datumTokenizer: Bloodhound.tokenizers.whitespace,
-    queryTokenizer: Bloodhound.tokenizers.whitespace,
-    prefetch: {
-        cache: false,
-        url: '{!! route('categories') !!}'
-    }
-});
-
-
-categories.initialize();
-
-
 $('.editable-category').editable({
     mode: 'inline',
     clear: true,
-    typeaheadjs: {
-        highlight: true,
-        name: 'categories',
-        source: categories.ttAdapter()
+    typeahead: {
+        name: 'category',
+        local: {!! json_encode($categories) !!}
     },
     success: function(response, newValue) {
         if(response.status == 'error') return response.message;

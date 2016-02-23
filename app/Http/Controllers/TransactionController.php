@@ -10,20 +10,23 @@ use Budget\Budget;
 use Budget\Http\Requests;
 use Budget\Http\Controllers\Controller;
 use Budget\Exceptions\JsonException;
+use Budget\Services\CategoryService;
 
 class TransactionController extends Controller
 {
 
     protected $month;
+    protected $categories;
 
     /**
      * Create a new controller instance.
      *
      * @return void
      */
-    public function __construct(Request $request)
+    public function __construct(Request $request, CategoryService $categories)
     {
         $this->month = (new Carbon($request->get('basedate')))->startOfMonth();
+        $this->categories = $categories;
     }
 
     /**
@@ -42,6 +45,7 @@ class TransactionController extends Controller
                     ->get()
                     ->pluck('category')
                     ->all(),
+                'categories' => $this->categories->getAll()->keys(),
             ]);
     }
 
