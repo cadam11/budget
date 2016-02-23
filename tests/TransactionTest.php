@@ -8,12 +8,25 @@ use Budget\Transaction;
  */
 class TransactionTest extends TestCase
 {
-    protected $validUser;
 
-    public function setUp()
+    public function test_it_navigates()
     {
-        parent::setUp();
-        $this->validUser = factory(Budget\User::class)->create();
+        $lastMonth = $month = Carbon\Carbon::now()->subMonth()->format('F Y');
+        $nextMonth = $month = Carbon\Carbon::now()->addMonth()->format('F Y');
+        $thisMonth = Carbon\Carbon::now()->format('F Y');
+
+        $this
+            ->actingAs($this->validUser)
+            ->visit('/transactions')
+            ->click('Next Month')
+            ->see($nextMonth)
+            ->click('Previous Month')
+            ->see($thisMonth)
+            ->click('Previous Month')
+            ->see($lastMonth)
+            ;
+
+
     }
 
     public function test_it_creates_new_transcations()
@@ -54,11 +67,4 @@ class TransactionTest extends TestCase
             ->assertResponseOk();
     }
 
-
-
-    public function tearDown()
-    {
-        $this->validUser->delete();
-        parent::tearDown();
-    }
 }
