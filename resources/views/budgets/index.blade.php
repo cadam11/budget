@@ -202,14 +202,13 @@
                                 <td class="text-right">
                                     <a 
                                         href="#" 
-                                        id="delete"
                                         data-toggle="confirmation"
                                         data-popout="true"
                                         data-singleton="true"
                                         data-btn-ok-icon="fa fa-check"
                                         data-btn-cancel-icon="fa fa-times" 
                                         data-pk="{{ $b->id }}"
-                                        class="text-muted">
+                                        class="text-muted delete">
                                         <i class="fa fa-times"></i>
                                     </a>
                                 </td>

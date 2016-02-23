@@ -13,7 +13,7 @@
 
                 <div class="panel-body">
 
-                    <form action="transactions::saveImport" class="dropzone" id="my-awesome-dropzone" method="post" style="border: 2px dashed #999">
+                    <form action="{{ route('transactions::saveImport') }}" class="dropzone" id="my-awesome-dropzone" method="post" style="border: 2px dashed #999">
                         {!! csrf_field() !!}
                         <div class="fallback">
                             <input name="file" type="file" />
