@@ -82,6 +82,8 @@
                                 <td class="text-right">
                                     <a 
                                         href="#" 
+                                        onclick="return false"
+                                        data-copy-attributes="onclick"
                                         data-toggle="confirmation"
                                         data-popout="true"
                                         data-singleton="true"

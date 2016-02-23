@@ -8,14 +8,13 @@
  */
 
 $('.delete[data-toggle="confirmation"]').confirmation({
+    copyAttributes: 'onclick',
     onConfirm: function() {
+        var table = $(this).parents('table').DataTable();
         var row = $(this).parents('tr');
        $.get($(this).data('target'))
         .done(function(response){
-            $(row).remove();
-        })
-        .fail(function(response){ 
-            console.error(response);
+            table.row(row).remove().draw(false);
         });
     }
 });
