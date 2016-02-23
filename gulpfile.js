@@ -48,6 +48,7 @@ elixir(function(mix) {
             '../bower/datatables-responsive/js/responsive.bootstrap.js',
         	'../bower/typeahead.js/dist/typeahead.bundle.min.js',
             '../bower/x-editable/dist/bootstrap3-editable/js/bootstrap-editable.min.js',
+            '../bower/x-editable/dist/inputs-ext/typeaheadjs/lib/typeahead.js',
             '../bower/x-editable/dist/inputs-ext/typeaheadjs/typeaheadjs.js',
             '../bower/bootstrap-confirmation2/bootstrap-confirmation.min.js',
             '../bower/bootstrap-select/dist/js/bootstrap-select.min.js'

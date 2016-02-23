@@ -66,7 +66,7 @@
                                     <a href="#" 
                                         class="editable-category"
                                         id="category" 
-                                        data-type="text"
+                                        data-type="typeaheadjs"
                                         data-pk="{{ $t->id }}"
                                         data-url="{{ route('transactions::update', ['id'=>$t->id]) }}"
                                         data-title="Enter category">
@@ -122,26 +122,12 @@
 @endsection
 @section('script')
 
-var categories = new Bloodhound({
-    datumTokenizer: Bloodhound.tokenizers.whitespace,
-    queryTokenizer: Bloodhound.tokenizers.whitespace,
-    prefetch: {
-        cache: false,
-        url: '{!! route('categories') !!}'
-    }
-});
-
-
-categories.initialize();
-
-
 $('.editable-category').editable({
     mode: 'inline',
     clear: true,
-    typeaheadjs: {
-        highlight: true,
-        name: 'categories',
-        source: categories.ttAdapter()
+    typeahead: {
+        name: 'category',
+        local: {!! json_encode($categories) !!}
     },
     success: function(response, newValue) {
         if(response.status == 'error') return response.message;
