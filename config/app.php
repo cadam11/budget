@@ -155,7 +155,6 @@ return [
         Budget\Providers\AuthServiceProvider::class,
         Budget\Providers\EventServiceProvider::class,
         Budget\Providers\RouteServiceProvider::class,
-        Budget\Providers\ViewServiceProvider::class,
 
         'Maatwebsite\Excel\ExcelServiceProvider',
         TomLingham\Searchy\SearchyServiceProvider::class,
