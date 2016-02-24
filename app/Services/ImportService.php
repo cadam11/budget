@@ -3,6 +3,7 @@
 namespace Budget\Services;
 
 use Excel;
+use Searchy;
 use Carbon\Carbon;
 use Budget\Transaction;
 use Budget\Services\CategoryService;
@@ -60,16 +61,25 @@ class ImportService {
                 'imported_description1' => $item->description_1,
                 'imported_description2' => $item->description_2,
                 'amount'                => $item->cad * -1,
+                'description'           => ucwords(strtolower($item->description_1)),
             ];
 
-            $t = Transaction::firstOrNew($record);
-            if (!$t->exists) {
-                $record['description'] = ucwords(strtolower($record['imported_description1']));
-                $t->description = $record['description'];
+            $matches = collect(Searchy::transactions('description')
+                ->query($record['description'])
+                ->getQuery()
+                ->having('amount', '=', $record['amount'])
+                ->having('date', '=', $record['date'])
+                ->having('account', '=', $record['account'])
+                ->get()
+                );
+
+            if ($matches->count() == 0){
+                $t = new Transaction($record);
                 $t->category = $this->categories->getCategory($record);
                 $t->save();
                 $importCount++;
-            }            
+            }
+
         }
 
         return $importCount;

@@ -10,6 +10,10 @@ use Budget\Transaction;
 use Budget\Services\ImportService;
 use Budget\Http\Requests;
 use Budget\Http\Controllers\Controller;
+use Budget\Services\CategoryService;
+
+
+// TODO: refactor this into TransactionController
 
 class ImportController extends Controller
 {
@@ -29,9 +33,10 @@ class ImportController extends Controller
      *
      * @return void
      */
-    public function __construct(ImportService $import)
+    public function __construct(ImportService $import, CategoryService $categories)
     {
         $this->import = $import;
+        $this->categories = $categories;
     }
 
 
@@ -80,7 +85,8 @@ class ImportController extends Controller
 
         return view('transactions.index', [
                 'transactions'  => $imported,
-                'title'         => 'Imported Transactions',
+                'title'         => $importCount.' '.str_plural('transaction', $importCount).' imported',
+                'categories'    => $this->categories->getAll()->keys(),
             ]);
     }
 
