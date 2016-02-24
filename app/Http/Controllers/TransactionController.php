@@ -16,17 +16,15 @@ class TransactionController extends Controller
 {
 
     protected $month;
-    protected $categories;
 
     /**
      * Create a new controller instance.
      *
      * @return void
      */
-    public function __construct(Request $request, CategoryService $categories)
+    public function __construct(Request $request)
     {
         $this->month = (new Carbon($request->get('basedate')))->startOfMonth();
-        $this->categories = $categories;
     }
 
     /**
@@ -45,7 +43,6 @@ class TransactionController extends Controller
                     ->get()
                     ->pluck('category')
                     ->all(),
-                'categories' => $this->categories->getAll()->keys(),
             ]);
     }
 

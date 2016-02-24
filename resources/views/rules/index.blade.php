@@ -27,10 +27,10 @@
                                 <td>
                                     <a href="#" 
                                         id="category" 
-                                        class="editable"
+                                        class="editable-category"
                                         data-mode="inline"
                                         data-clear="true"
-                                        data-type="text"
+                                        data-type="typeaheadjs"
                                         data-pk="{{ $r->id }}"
                                         data-url="{{ route('admin::rules::update', [$r->id]) }}">
 
@@ -90,4 +90,20 @@
         </div>
     </div>
 </div>
+@endsection
+@section('script')
+
+$('.editable-category').editable({
+    mode: 'inline',
+    clear: true,
+    typeahead: {
+        name: 'category',
+        local: {!! json_encode($categories) !!}
+    },
+    success: function(response, newValue) {
+        if(response.status == 'error') return response.message;
+    }
+
+});
+
 @endsection

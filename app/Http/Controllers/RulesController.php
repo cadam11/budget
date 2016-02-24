@@ -17,7 +17,7 @@ class RulesController extends Controller
     public function index()
     {
         return view('rules.index',[
-                'rules'     => Rule::all(),
+                'rules'     => Rule::all()->sortBy('category'),
             ]);
     }
 
@@ -76,7 +76,7 @@ class RulesController extends Controller
             $r->setAttribute($request->input('name'), $value);
             $r->save();
         } catch (\Exception $e) {
-            return $this->handleError($e);
+            throw new JsonException($e);
         }
         
     }
@@ -94,20 +94,8 @@ class RulesController extends Controller
             $r->delete();
             return response()->json(['status'=>'success'], 200);
         } catch (\Exception $e) {
-            return $this->handleError($e);
+            throw new JsonException($e);
         }
     }
-
-    /**
-     * Creates a JSON response for when exceptions happen
-     * @param  \Exception $e [description]
-     * @return [type]        [description]
-     */
-    public function handleError(\Exception $e) {
-        // TODO: Make this into a provider
-        return response()->json([
-                'status'=>'error', 
-                'message'=>$e->getMessage()
-            ], 400);
-    }    
+ 
 }

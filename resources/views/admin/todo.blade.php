@@ -17,8 +17,8 @@
                         <li>Auditing of user actions</li>
                         <li>API key authentication</li>
                         <li>User administration &amp; roles</li>
-                        <li>Sumamry Income vs Expense on Budget Screen</li>
-                        <li>Sumamry Income vs Expense on Home Screen</li>
+                        <li>Summary Income vs Expense on Budget Screen</li>
+                        <li>Summary Income vs Expense on Home Screen</li>
                     </ul>
 
                     <h3>Past things, now done</h3>
@@ -27,6 +27,7 @@
                         <li>Handle income categories as well</li>
                         <li>Deal with duplicate incoming transactions</li>
                         <li>Better duplicate transaction matching</li>
+                        <li>Sort rules by category</li>
                     </ul>                    
                 </div>
             </div>
