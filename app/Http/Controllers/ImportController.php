@@ -35,6 +35,7 @@ class ImportController extends Controller
      */
     public function __construct(ImportService $import)
     {
+        parent::__construct();
         $this->import = $import;
     }
 

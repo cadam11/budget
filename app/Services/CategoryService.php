@@ -16,7 +16,7 @@ class CategoryService {
      */
     public function __construct()
     {
-        $this->rules = Rule::all();
+        
     }
 
     /**
@@ -41,6 +41,8 @@ class CategoryService {
 	 * @return String|null     The matched category, or null if no match
 	 */
 	public function getCategory($row) {
+		if ($this->rules == null) $this->rules = Rule::all();
+		
 		$c = $this->matchesBoth($row);
 		if (!$c) {
 			$c = $this->matchesPatternOnly($row);

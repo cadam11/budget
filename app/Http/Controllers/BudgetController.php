@@ -25,6 +25,7 @@ class BudgetController extends Controller
      */
     public function __construct(Request $request)
     {
+        parent::__construct();
         $this->month = (new Carbon($request->get('basedate')))->startOfMonth();
     }
 
