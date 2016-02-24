@@ -36,11 +36,28 @@ class BudgetController extends Controller
      */
     public function index()
     {
+
+        $incomePct = 0;
+        $expensePct = 0;
+        $net = 0;
+
         $budgets = Budget::month($this->month)->get()->groupBy('type');
+
+        if (isset($budgets['Income']) && isset($budgets['Expense'])){
+            $totalIncome = $budgets['Income']->sum('amount');
+            $totalExpense = $budgets['Expense']->sum('amount');
+            $max = max($totalIncome, $totalExpense);
+            $incomePct = $totalIncome / $max * 100;
+            $expensePct = $totalExpense / $max * 100;
+            $net = $totalIncome - $totalExpense;
+        }
         
         return view('budgets.index', [
             'budgets' => $budgets,
             'basedate' => $this->month,
+            'incomePct' => $incomePct,
+            'expensePct' => $expensePct,
+            'net' => $net,
             ]);
     }
 
