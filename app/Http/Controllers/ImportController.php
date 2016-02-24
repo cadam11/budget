@@ -33,10 +33,9 @@ class ImportController extends Controller
      *
      * @return void
      */
-    public function __construct(ImportService $import, CategoryService $categories)
+    public function __construct(ImportService $import)
     {
         $this->import = $import;
-        $this->categories = $categories;
     }
 
 
@@ -86,7 +85,6 @@ class ImportController extends Controller
         return view('transactions.index', [
                 'transactions'  => $imported,
                 'title'         => $importCount.' '.str_plural('transaction', $importCount).' imported',
-                'categories'    => $this->categories->getAll()->keys(),
             ]);
     }
 
