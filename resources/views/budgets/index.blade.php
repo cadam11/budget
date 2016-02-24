@@ -22,22 +22,67 @@
                             @endfor
                         </select>
                         <span class="input-group-btn">
-                            <a class="btn btn-default"  href="{{ route('transactions::index', ['basedate' => (new Carbon\Carbon($basedate->startOfMonth()))->addMonth()->toDateTimeString()]) }}"><i class="fa fa-chevron-right"></i><span class="sr-only">Next Month</span></a>
+                            <a class="btn btn-default"  href="{{ route('budgets::index', ['basedate' => (new Carbon\Carbon($basedate->startOfMonth()))->addMonth()->toDateTimeString()]) }}"><i class="fa fa-chevron-right"></i><span class="sr-only">Next Month</span></a>
                         </span>
                     </div>
                     <div class="btn-group pull-right">
-                        <a class="btn btn-xs btn-default" href="/budgets/create?basedate={{ $basedate }}"><i class="fa fa-plus"></i> New Budget</a>
+                        <a class="btn btn-xs btn-default" href="{{ route('budgets::create', ['basedate', $basedate]) }}"><i class="fa fa-plus"></i> New Budget</a>
                         <button type="button" class="btn btn-xs btn-default dropdown-toggle" data-toggle="dropdown">
                             <span class="caret"></span>
                         </button>
                         <ul class="dropdown-menu">
-                            <li><a href="/budgets/copy?basedate={{ $basedate }}"><i class="fa fa-clone"></i> Copy from last month</a></li>
+                            <li><a href="{{ route('budgets::copy', ['basedate', $basedate]) }}"><i class="fa fa-clone"></i> Copy from last month</a></li>
                         </ul>
                     </div>
                 </div>
                 </form>
 
                 <div class="panel-body">
+
+                    @if (isset($budgets['Income']) && isset($budgets['Expense']))                    
+
+                        <h3>Budgeted</h3>
+                        <div class="row">
+                            <div class="col-sm-2">
+                            Income
+                            </div>
+                            <div class="col-sm-8">
+                                <div class="progress">
+                                    <div class="progress-bar progress-bar-primary" role="progressbar" 
+                                        style="width:{{ $incomePct }}%">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-2">
+                            {{money_format("$%n", $budgets['Income']->sum('amount'))}}
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-2">
+                            Expenses
+                            </div>
+                            <div class="col-sm-8">
+                                <div class="progress">
+                                    <div class="progress-bar progress-bar-primary" role="progressbar" 
+                                        style="width:{{ $expensePct }}%">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-2">
+                            {{money_format("$%n", $budgets['Expense']->sum('amount'))}}
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-12 lead text-center
+                            @if ($net < 0) text-danger @endif
+                            ">
+                            {{ ($net<0?'Deficit':'Surplus') }} <strong>{{money_format("$%n", $net)}}</strong>
+                            </div>
+                        </div>
+
+                    @endif
+
+
 
 
                     @if (isset($budgets['Income']))
