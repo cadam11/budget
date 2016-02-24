@@ -12,4 +12,8 @@
 	width: 130px;
 }
 
+ul.done li {
+	text-decoration: line-through;
+}
+
 @import "typeahead.scss"

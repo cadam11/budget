@@ -19,14 +19,14 @@
                         <li>User administration &amp; roles</li>
                         <li>Sumamry Income vs Expense on Budget Screen</li>
                         <li>Sumamry Income vs Expense on Home Screen</li>
-                        <li>Better duplicate transaction matching</li>
                     </ul>
 
                     <h3>Past things, now done</h3>
-                    <ul>
-                        <li><del>Manage rules for auto-assignment of categories</del></li>
-                        <li><del>Handle income categories as well</del></li>
-                        <li><del>Deal with duplicate incoming transactions</del></li>
+                    <ul class="done">
+                        <li>Manage rules for auto-assignment of categories</li>
+                        <li>Handle income categories as well</li>
+                        <li>Deal with duplicate incoming transactions</li>
+                        <li>Better duplicate transaction matching</li>
                     </ul>                    
                 </div>
             </div>
