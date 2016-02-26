@@ -83,12 +83,7 @@
                                     <a 
                                         href="#" 
                                         onclick="return false"
-                                        data-copy-attributes="onclick"
                                         data-toggle="confirmation"
-                                        data-popout="true"
-                                        data-singleton="true"
-                                        data-btn-ok-icon="fa fa-check"
-                                        data-btn-cancel-icon="fa fa-times" 
                                         data-target="{{ route('transactions::delete', [$t->id]) }}"
                                         class="text-muted delete">
                                         <i class="fa fa-times"></i>

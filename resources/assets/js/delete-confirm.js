@@ -8,6 +8,10 @@
  */
 
 $('.delete[data-toggle="confirmation"]').confirmation({
+	popout: true,
+	singleton: true,
+	btnOkIcon: 'fa fa-check',
+	btnCancelIcon: 'fa fa-times',
     copyAttributes: 'onclick',
     onConfirm: function() {
         var table = $(this).parents('table').DataTable();
