@@ -21,4 +21,7 @@ $.fn.editable.defaults.params = function (params) {
     return params;
 };
 
-$('.editable').editable();
+$('.editable').editable({
+	mode: 'inline',
+	clear: true
+});

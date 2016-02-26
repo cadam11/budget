@@ -3,3 +3,5 @@
 /**
  *  Global application js
  */
+
+$('table.datatable').DataTable();

@@ -86,183 +86,33 @@
 
 
                     @if (isset($budgets['Income']))
-                    <h3>Income</h3>
-                    <table class="table table-responsive responsive plain-datatable"
-                        data-paging="false" 
-                        data-order='[[ 2, "desc" ], [0, "asc"]]' >
-                        <thead>
-                            <tr>
-                                <th class="col-xs-2 col-sm-2">Category</th>
-                                <th class="col-xs-1 col-sm-1">Amount</th>
-                                <th class="col-xs-1 col-sm-1">Type</th>
-                                <th class="col-xs-1" data-orderable="false"></th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            @foreach ($budgets['Income'] as $b)
-                            <tr>
-                                <td>{{ $b->category }}</td>
-                                <td>
-                                    <a href="#" 
-                                        class="editable-amount"
-                                        id="amount" 
-                                        data-type="text"
-                                        data-pk="{{ $b->id }}"
-                                        data-url="/budgets/{{ $b->id }}"
-                                        data-value= "{{$b->amount}}"
-                                        data-title="Enter amount">
-
-                                        {{ money_format("$%n", $b->amount) }}
-                                    </a>
-                                </td>
-                                <td>
-                                    <a href="#"
-                                        class="editable-variable"
-                                        id="variable" 
-                                        data-type="select"
-                                        data-pk="{{ $b->id }}"
-                                        data-url="/budgets/{{ $b->id }}"
-                                        data-value= "{{$b->variable}}">
-
-                                </td>
-                                <td class="text-right">
-                                    <a 
-                                        href="#" 
-                                        data-toggle="confirmation"
-                                        data-popout="true"
-                                        data-singleton="true"
-                                        data-btn-ok-icon="fa fa-check"
-                                        data-btn-cancel-icon="fa fa-times" 
-                                        data-pk="{{ $b->id }}"
-                                        class="text-muted delete">
-                                        <i class="fa fa-times"></i>
-                                    </a>
-                                </td>
-                            </tr>
-                            @endforeach
-                        </tbody>
-                        <tfoot>
-                            <th>Total Budgeted</th>
-                            <th>{{money_format("$%n", $budgets['Income']->sum('amount'))}}</th>
-                            <th></th>
-                            <th></th>
-                        </tfoot>
-                    </table>
-                    <hr/>
+                    @include('budgets.partials.table', [
+                        'title' => 'Income',
+                        'budgets' => $budgets['Income'],
+                        ])
                     @endif
+
+
 
 
                     @if (isset($budgets['Expense']))
-                    <h3>Expenses</h3>
-                    <table class="table table-responsive responsive grouped-by-variable"
-                        data-paging="false" 
-                        data-order='[[ 2, "desc" ], [0, "asc"]]' >
-                        <thead>
-                            <tr>
-                                <th class="col-xs-2 col-sm-2">Category</th>
-                                <th class="col-xs-1 col-sm-1">Amount</th>
-                                <th class="col-xs-1 col-sm-1">Type</th>
-                                <th class="col-xs-1" data-orderable="false"></th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            @foreach ($budgets['Expense'] as $b)
-                            <tr>
-                                <td>{{ $b->category }}</td>
-                                <td>
-                                    <a href="#" 
-                                        class="editable-amount"
-                                        id="amount" 
-                                        data-type="text"
-                                        data-pk="{{ $b->id }}"
-                                        data-url="/budgets/{{ $b->id }}"
-                                        data-value= "{{$b->amount}}"
-                                        data-title="Enter amount">
-
-                                        {{ money_format("$%n", $b->amount) }}
-                                    </a>
-                                </td>
-                                <td>
-                                    <a href="#"
-                                        class="editable-variable"
-                                        id="variable" 
-                                        data-type="select"
-                                        data-pk="{{ $b->id }}"
-                                        data-url="/budgets/{{ $b->id }}"
-                                        data-value= "{{$b->variable}}">
-
-                                </td>
-                                <td class="text-right">
-                                    <a 
-                                        href="#" 
-                                        id="delete"
-                                        data-toggle="confirmation"
-                                        data-popout="true"
-                                        data-singleton="true"
-                                        data-btn-ok-icon="fa fa-check"
-                                        data-btn-cancel-icon="fa fa-times" 
-                                        data-pk="{{ $b->id }}"
-                                        class="text-muted">
-                                        <i class="fa fa-times"></i>
-                                    </a>
-                                </td>
-                            </tr>
-                            @endforeach
-                        </tbody>
-                        <tfoot>
-                            <th>Total Budgeted</th>
-                            <th>{{money_format("$%n", $budgets['Expense']->sum('amount'))}}</th>
-                            <th></th>
-                            <th></th>
-                        </tfoot>
-                    </table>
-                    <hr/>
+                    @include('budgets.partials.table', [
+                        'title' => 'Expense',
+                        'budgets' => $budgets['Expense'],
+                        ])
                     @endif
-
 
 
 
 
                     @if (isset($budgets['Ignored']))
-                    <h3>Ignored</h3>
-                    <table class="table table-responsive responsive plain-datatable"
-                        data-paging="false" 
-                        data-order='[[ 2, "desc" ], [0, "asc"]]' >
-                        <thead>
-                            <tr>
-                                <th class="col-xs-2 col-sm-2">Category</th>
-                                <th class="col-xs-1 col-sm-1">Amount</th>
-                                <th class="col-xs-1 col-sm-1">Type</th>
-                                <th class="col-xs-1" data-orderable="false"></th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            @foreach ($budgets['Ignored'] as $b)
-                            <tr>
-                                <td>{{ $b->category }}</td>
-                                <td>
-                                </td>
-                                <td>
-                                </td>
-                                <td class="text-right">
-                                    <a 
-                                        href="#" 
-                                        onclick="return false"
-                                        data-copy-attributes="onclick"
-                                        data-toggle="confirmation"
-                                        data-popout="true"
-                                        data-singleton="true"
-                                        data-btn-ok-icon="fa fa-check"
-                                        data-btn-cancel-icon="fa fa-times" 
-                                        data-pk="{{ $b->id }}"
-                                        class="text-muted delete">
-                                        <i class="fa fa-times"></i>
-                                    </a>
-                                </td>
-                            </tr>
-                            @endforeach
-                        </tbody>
-                    </table>
+                    @include('budgets.partials.table', [
+                        'title' => 'Ignored',
+                        'budgets' => $budgets['Ignored'],
+                        'showFooter' => false,
+                        'showAmount' => false,
+                        'showType' => false,
+                        ])
                     @endif
 
                 </div>
@@ -273,13 +123,6 @@
 @endsection
 @section('script')
 
-$('.editable-amount').editable({
-    mode: 'inline',
-    clear: true,
-    success: function(response, newValue) {
-        if(response.status == 'error') return response.message;
-    }
-});
 $('.editable-variable').editable({
     mode: 'inline',
     source: [
@@ -291,9 +134,7 @@ $('.editable-variable').editable({
     }
 });
 
-var table = $('table.plain-datatable').DataTable();
-
-var table = $('table.grouped-by-variable').DataTable({
+$('table[data-grouping="Type"]').DataTable({
     "order": [[ 2, 'desc' ]],
     "drawCallback": function ( settings ) {
         var api = this.api();
