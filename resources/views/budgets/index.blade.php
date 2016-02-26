@@ -6,7 +6,7 @@
     <div class="row">
         <div class="col-md-10 col-md-offset-1">
             <div class="panel panel-default">
-                <form class="form-inline">
+                <form class="form-inline" action="{{ route('budgets::index') }}">
                 <div class="panel-heading">
                     <div class="input-group">
                         <span class="input-group-btn">
@@ -26,12 +26,12 @@
                         </span>
                     </div>
                     <div class="btn-group pull-right">
-                        <a class="btn btn-xs btn-default" href="{{ route('budgets::create', ['basedate', $basedate]) }}"><i class="fa fa-plus"></i> New Budget</a>
+                        <a class="btn btn-xs btn-default" href="{{ route('budgets::create', ['basedate' => $basedate->toDateTimeString()]) }}"><i class="fa fa-plus"></i> New Budget</a>
                         <button type="button" class="btn btn-xs btn-default dropdown-toggle" data-toggle="dropdown">
                             <span class="caret"></span>
                         </button>
                         <ul class="dropdown-menu">
-                            <li><a href="{{ route('budgets::copy', ['basedate', $basedate]) }}"><i class="fa fa-clone"></i> Copy from last month</a></li>
+                            <li><a href="{{ route('budgets::copy', ['basedate' => $basedate->toDateTimeString()]) }}"><i class="fa fa-clone"></i> Copy from last month</a></li>
                         </ul>
                     </div>
                 </div>
