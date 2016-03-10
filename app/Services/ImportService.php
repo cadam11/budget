@@ -41,6 +41,7 @@ class ImportService {
 
     /**
      * Parses the csv object into transctions
+     * Deletes tentative transactions
      * 
      * @param  Maatwebsite\Excel\Collections\RowCollection $csv The raw csv parsed into a collection of rows
      * @return int      A count of the number of transactions actually imported
@@ -52,6 +53,7 @@ class ImportService {
             return in_array($item->account_type, $accounts);
         });
 
+        Transaction::tentative()->delete();
         $importCount = 0;
 
         foreach($transactions as $item){
@@ -63,6 +65,8 @@ class ImportService {
                 'amount'                => $item->cad * -1,
                 'description'           => ucwords(strtolower($item->description_1)),
             ];
+
+            if (isset($item->tentative)) $record['tentative'] = $item->tentative;
 
             $matches = collect(Searchy::transactions('description')
                 ->query($record['description'])
