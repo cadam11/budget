@@ -13,7 +13,8 @@ after_success:
 - chmod 600 .travis/deploy_key.pem
 - ssh-add .travis/deploy_key.pem
 - ssh-keyscan -H adam11.ca >> ~/.ssh/known_hosts
-- git remote add deploy ssh://adamca@adam11.ca:/home/adamca/repo/budget.git
+- git remote add deploy ssh://adamca@adam11.ca:/home/adamca/budget
+- ssh adamca@adam11.ca "cd ~/budget; php artisan migrate"
 - git push deploy master
 before_install:
 - openssl aes-256-cbc -K $encrypted_e714f8138009_key -iv $encrypted_e714f8138009_iv

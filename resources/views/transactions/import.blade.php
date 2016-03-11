@@ -33,6 +33,38 @@
 
                 </div>
             </div>
+
+            <div class="panel panel-default">
+                <div class="panel-body">
+                    <h2>
+                        <span class="fa-stack fa-lg">
+                            <i class="fa fa-circle-o fa-stack-2x"></i>
+                            <i class="fa fa-stack-1x fa-info"></i>
+                        </span>
+                        How importing transactions works    
+                    </h2>
+                    <p>
+                        The software expects a CSV file with headers that include (at least) the required
+                        columns given above. It parses the CSV into a <a href="https://laravel.com/docs/master/collections">Laravel Collection</a> using <a href="https://github.com/Maatwebsite/Laravel-Excel">Laravel Excel</a>, then filters that collection based on hard-coded (currently) values in the <code>account_type</code> column:
+                        <ul>
+                            <li>Chequing</li>
+                            <li>MasterCard</li>
+                        </ul>
+                    </p>
+                    <p>
+                        <h4>Tentative transactions</h4>
+                        Before actually creating any new records, it first deletes any transactions marked as tentative (based on a true value in the <code>tentative</code> optional column). The intention here is that tentative transasctions, if they're not confirmed, will just disappear from the imported data. If they're present and still tentative, they'll be re-imported. If they're present, but no longer tentative, they'll be re-imported as regular tranasctions (as if they'd never been tentative in the first place). There are a few downsides to this approach:
+                        <ul class="fa-ul">
+                            <li><i class="fa fa-li fa-times text-danger"></i>Any manual categorization of tentative transcations is lost at each import run</li>
+                            <li><i class="fa fa-li fa-times text-danger"></i>If transactions are imported one <code>account_type</code> at a time, then tentative transactions from the first import will be wiped out by the second import.</li>
+                        </ul>
+                    </p>
+                    <p>
+                        <h4>Matching duplicates</h4>
+                        The system attemps to match up duplicate transactions. It uses a fuzzy matching component to compare descriptions, <a href="https://github.com/TomLingham/Laravel-Searchy">Laravel Searchy</a>. For a duplicate transaction to match, it must have identical amount (<code>cad</code>) and <code>transaction_date</code>. The <code>description_1</code> may be only a partial match.
+                    </p>
+                </div>
+            </div>
         </div>
     </div>
 </div>

@@ -61,7 +61,11 @@
                             @foreach ($transactions->sortBy('date') as $t)
                             <tr>
                                 <td>{{ $t->date->format('Y-m-d') }}</td>
-                                <td>{{ $t->description }}</td>
+                                <td>{{ $t->description }} 
+                                @if ($t->tentative)
+                                <i class="fa fa-credit-card"></i>
+                                @endif
+                                </td>
                                 <td>
                                     <a href="#" 
                                         class="editable-category"
