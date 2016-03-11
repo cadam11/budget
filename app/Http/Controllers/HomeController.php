@@ -17,9 +17,11 @@ class HomeController extends Controller
     public function index(OverviewService $overview, Request $request)
     {
         $month = (new Carbon($request->get('basedate')))->startOfMonth();
+        $budgets = $overview->get($month)->groupBy('type');
+
 
         return view('home', [
-            'budgets' => $overview->get($month)->groupBy('type'),
+            'budgets' => $budgets,
             'basedate' => $month,
             ]);
     }

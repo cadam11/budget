@@ -72,11 +72,34 @@ class OverviewService {
 			]);
 
 		$unbudgeted->actual = $actuals->sum('actual');
-		$unbudgeted->used = 100;
-		$unbudgeted->status = 'info';
-		$unbudgeted->left = 0 - $unbudgeted->actual;
+
+
+        $budgetedIncome = $budgets
+        	->filter(function($b) { return $b->type == 'Income'; })
+        	->sum('amount');
+
+        $fixedBudgetedExpenses = $budgets
+        	->filter(function($b) { return $b->type == 'Expense' && !$b->variable; })
+        	->sum('amount');
+
+        $variableActualExpenses = $budgets
+        	->filter(function($b) { return $b->type == 'Expense' && $b->variable; })
+        	->sum('actual');
+
+
+		$unbudgeted->left = $budgetedIncome
+			- $fixedBudgetedExpenses
+			- $variableActualExpenses
+			- $unbudgeted->actual;
+        
+		if ($unbudgeted->actual + $unbudgeted->left != 0)
+			$unbudgeted->used = (int)($unbudgeted->actual / ($unbudgeted->actual + $unbudgeted->left) * 100);;
+		$unbudgeted->status = ($unbudgeted->used < 90 ? 'success' : ($unbudgeted->used > 103 ? 'danger' : 'warning'));
+
+
 
 		$budgets->prepend($unbudgeted);
+
 
 		return $budgets;
 	}

@@ -73,6 +73,6 @@ elixir(function(mix) {
         	])
     ;
 
-    mix.phpUnit();
+    mix.phpunit('',{debug: true, notify: false});
 
 });
