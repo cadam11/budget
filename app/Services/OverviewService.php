@@ -93,7 +93,7 @@ class OverviewService {
 			- $unbudgeted->actual;
         
 		if ($unbudgeted->actual + $unbudgeted->left != 0)
-			$unbudgeted->used = (int)($unbudgeted->actual / min(($unbudgeted->actual + $unbudgeted->left) * 100), 100);
+			$unbudgeted->used = (int)($unbudgeted->actual / min(($unbudgeted->actual + $unbudgeted->left) * 100, 100));
 
 		$unbudgeted->status = ($unbudgeted->used < 90 ? 'success' : ($unbudgeted->used > 103 ? 'danger' : 'warning'));
 
