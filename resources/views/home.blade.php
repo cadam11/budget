@@ -45,7 +45,7 @@
                                 <td>{{$budget->category or "Uncategorized"}}</td>
                                 <td>
                                     <div class="progress">
-                                        <div class="progress-bar progress-bar-{{$budget->status}}" role="progressbar" style="width:{{$budget->used}}%">
+                                        <div class="progress-bar progress-bar-{{$budget->status}}" role="progressbar" style="width:{{min(100,$budget->used)}}%">
                                             {{money_format("$%n", $budget->actual)}}
                                         </div>
                                     </div>
@@ -76,7 +76,7 @@
                                 <td><a href="{{ url('/transactions')."?search=".$budget->category }}">{{$budget->category or "Uncategorized"}}</td>
                                 <td>
                                     <div class="progress">
-                                        <div class="progress-bar progress-bar-{{$budget->status}}" role="progressbar" style="width:{{$budget->used}}%">
+                                        <div class="progress-bar progress-bar-{{$budget->status}}" role="progressbar" style="width:{{min(100,$budget->used)}}%">
                                             {{money_format("$%n", $budget->actual)}}
                                         </div>
                                     </div>
