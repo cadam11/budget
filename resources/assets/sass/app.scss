@@ -16,4 +16,10 @@ ul.done li {
 	text-decoration: line-through;
 }
 
+/* Used to offset icon in transactions/index.blade.php */
+.offset-left {
+	margin-left: -20px;
+	margin-right: 4px;
+}
+
 @import "typeahead.scss"

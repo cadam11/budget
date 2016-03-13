@@ -61,10 +61,11 @@
                             @foreach ($transactions->sortBy('date') as $t)
                             <tr>
                                 <td>{{ $t->date->format('Y-m-d') }}</td>
-                                <td>{{ $t->description }} 
+                                <td>
                                 @if ($t->tentative)
-                                <i class="fa fa-credit-card"></i>
+                                <i class="fa fa-credit-card offset-left"></i>
                                 @endif
+                                {{ $t->description }} 
                                 </td>
                                 <td>
                                     <a href="#" 
