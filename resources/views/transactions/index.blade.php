@@ -81,6 +81,9 @@
                                     @if (isset($budgets) && !in_array($t->category, $budgets))
                                     <div class="hidden">Unbudgeted</div>
                                     @endif
+                                    @if ($t->tentative)
+                                    <div class="hidden">Tentative</div>
+                                    @endif
                                 </td>
                                 <td>{{ $t->account }}</td>
                                 <td>{{ money_format("$%n", $t->amount) }}</td>
