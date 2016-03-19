@@ -97,8 +97,8 @@ class OverviewService {
 
 		$unbudgeted->amount = $unbudgeted->actual + $unbudgeted->left;
         
-		if ($unbudgeted->amount == 0) 
-			$unbudgeted->used = 100;
+		if ($unbudgeted->amount <= 0) 
+			$unbudgeted->used = 200;
 		else
 			$unbudgeted->used = (int)($unbudgeted->actual / $unbudgeted->amount * 100);
 
