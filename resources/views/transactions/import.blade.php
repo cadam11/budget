@@ -61,7 +61,7 @@
                     </p>
                     <p>
                         <h4>Matching duplicates</h4>
-                        The system attemps to match up duplicate transactions. It uses a fuzzy matching component to compare descriptions, <a href="https://github.com/TomLingham/Laravel-Searchy">Laravel Searchy</a>. For a duplicate transaction to match, it must have identical amount (<code>cad</code>) and <code>transaction_date</code>. The <code>description_1</code> may be only a partial match.
+                        The system attemps to match up duplicate transactions. It uses a fuzzy matching component to compare descriptions, <a href="https://github.com/TomLingham/Laravel-Searchy">Laravel Searchy</a>. For a duplicate transaction to match, it must have identical amount (<code>cad</code>), <code>transaction_date</code>, and <code>account</code>. The first word (space delimited) in <code>description_1</code> is used to search for a match.
                     </p>
                 </div>
             </div>

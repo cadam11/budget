@@ -69,11 +69,11 @@ class ImportService {
             if (isset($item->tentative)) $record['tentative'] = $item->tentative;
 
             $matches = collect(Searchy::transactions('description')
-                ->query($record['description'])
+                ->query(explode(' ', $record['description'], 2)[0])
                 ->getQuery()
-                ->having('amount', '=', $record['amount'])
-                ->having('date', '=', $record['date'])
-                ->having('account', '=', $record['account'])
+                ->where('date', '=', $record['date']->toDateString())
+                ->where('amount', '=', $record['amount'])
+                ->where('account', '=', $record['account'])
                 ->get()
                 );
 
