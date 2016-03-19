@@ -66,7 +66,6 @@ class OverviewService {
 
 		$unbudgeted = new Budget([
 				'category' => 'Unbudgeted',
-				'amount' => 0.0,	// TODO: could be based on what's left of income
 				'variable' => 1,
 				'type' => 'Expense',
 			]);
@@ -74,26 +73,34 @@ class OverviewService {
 		$unbudgeted->actual = $actuals->sum('actual');
 
 
-        $budgetedIncome = $budgets
-        	->filter(function($b) { return $b->type == 'Income'; })
-        	->sum('amount');
+        $budgetedIncome = 0;
+        $fixedBudgetedExpenses = 0;
+        $variableActualExpenses = 0;
 
-        $fixedBudgetedExpenses = $budgets
-        	->filter(function($b) { return $b->type == 'Expense' && !$b->variable; })
-        	->sum('amount');
+        foreach ($budgets as $key => $b) {
+        	if ($b->type == 'Income')
+        		$budgetedIncome += max($b->amount, $b->actual);
 
-        $variableActualExpenses = $budgets
-        	->filter(function($b) { return $b->type == 'Expense' && $b->variable; })
-        	->sum('actual');
+        	else if ($b->type == 'Expense' && !$b->variable)
+        		$fixedBudgetedExpenses += max($b->amount, $b->actual);
+
+        	else if ($b->type =='Expense' && $b->variable)
+        		$variableActualExpenses += $b->actual;
+        }
+
 
 
 		$unbudgeted->left = $budgetedIncome
 			- $fixedBudgetedExpenses
 			- $variableActualExpenses
 			- $unbudgeted->actual;
+
+		$unbudgeted->amount = $unbudgeted->actual + $unbudgeted->left;
         
-		if ($unbudgeted->actual + $unbudgeted->left != 0)
-			$unbudgeted->used = (int)($unbudgeted->actual / ($unbudgeted->actual + $unbudgeted->left) * 100);
+		if ($unbudgeted->amount == 0) 
+			$unbudgeted->used = 100;
+		else
+			$unbudgeted->used = (int)($unbudgeted->actual / $unbudgeted->amount * 100);
 
 		$unbudgeted->status = ($unbudgeted->used < 90 ? 'success' : ($unbudgeted->used > 103 ? 'danger' : 'warning'));
 
